@@ -1,0 +1,203 @@
+[
+    {
+        "name": "id",
+        "type": "integer",
+        "label": "ID"
+    },
+    {
+        "name": "brand_name",
+        "type": "text",
+        "label": "Brand name"
+    },
+    {
+        "name": "brand_website",
+        "type": "text",
+        "label": "Brand website"
+    },
+    {
+        "name": "status",
+        "type": "text",
+        "label": "Status"
+    },
+    {
+        "name": "country",
+        "type": "text",
+        "label": "Country"
+    },
+    {
+        "name": "language",
+        "type": "text",
+        "label": "Language"
+    },
+    {
+        "name": "selected_ai_models",
+        "type": "array",
+        "label": "Selected AI models",
+        "spec": {
+            "type": "text",
+            "label": "Selected AI model"
+        }
+    },
+    {
+        "name": "last_checked_at",
+        "type": "date",
+        "label": "Last checked at"
+    },
+    {
+        "name": "connections",
+        "type": "collection",
+        "label": "Connections",
+        "spec": [
+            {
+                "name": "ga4",
+                "type": "boolean",
+                "label": "GA4"
+            },
+            {
+                "name": "google_search_console",
+                "type": "boolean",
+                "label": "Google search console"
+            },
+            {
+                "name": "bing_webmaster_tools",
+                "type": "boolean",
+                "label": "Bing webmaster tools"
+            }
+        ]
+    },
+    {
+        "name": "connected_data",
+        "type": "collection",
+        "label": "Connected data",
+        "spec": [
+            {
+                "name": "ga4",
+                "type": "collection",
+                "label": "GA4",
+                "spec": [
+                    {
+                        "name": "latest_fetched_at",
+                        "type": "date",
+                        "label": "Latest fetched at"
+                    },
+                    {
+                        "name": "is_stale",
+                        "type": "boolean",
+                        "label": "Is stale"
+                    }
+                ]
+            },
+            {
+                "name": "google_search_console",
+                "type": "collection",
+                "label": "Google search console",
+                "spec": [
+                    {
+                        "name": "latest_fetched_at",
+                        "type": "date",
+                        "label": "Latest fetched at"
+                    },
+                    {
+                        "name": "is_stale",
+                        "type": "boolean",
+                        "label": "Is stale"
+                    }
+                ]
+            },
+            {
+                "name": "bing_webmaster_tools",
+                "type": "collection",
+                "label": "Bing webmaster tools",
+                "spec": [
+                    {
+                        "name": "latest_fetched_at",
+                        "type": "date",
+                        "label": "Latest fetched at"
+                    },
+                    {
+                        "name": "is_stale",
+                        "type": "boolean",
+                        "label": "Is stale"
+                    },
+                    {
+                        "name": "needs_reauth",
+                        "type": "boolean",
+                        "label": "Needs reauth"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "data_availability",
+        "type": "collection",
+        "label": "Data availability",
+        "spec": [
+            {
+                "name": "metrics",
+                "type": "boolean",
+                "label": "Metrics"
+            },
+            {
+                "name": "metrics_fetched_at",
+                "type": "date",
+                "label": "Metrics fetched at"
+            },
+            {
+                "name": "latest_check_date",
+                "type": "text",
+                "label": "Latest check date"
+            },
+            {
+                "name": "topics",
+                "type": "integer",
+                "label": "Topics"
+            },
+            {
+                "name": "prompts",
+                "type": "integer",
+                "label": "Prompts"
+            },
+            {
+                "name": "mentions",
+                "type": "integer",
+                "label": "Mentions"
+            },
+            {
+                "name": "answer_insights",
+                "type": "integer",
+                "label": "Answer insights"
+            },
+            {
+                "name": "competitor_snapshots",
+                "type": "integer",
+                "label": "Competitor snapshots"
+            },
+            {
+                "name": "top_site_snapshots",
+                "type": "integer",
+                "label": "Top site snapshots"
+            },
+            {
+                "name": "trust_mentions",
+                "type": "integer",
+                "label": "Trust mentions"
+            },
+            {
+                "name": "recommendations",
+                "type": "integer",
+                "label": "Recommendations"
+            },
+            {
+                "name": "ga4_snapshots",
+                "type": "integer",
+                "label": "GA4 snapshots"
+            },
+            {
+                "name": "search_performance_snapshots",
+                "type": "integer",
+                "label": "Search performance snapshots"
+            }
+        ]
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "personal_access_token",
+        "type": "password",
+        "label": "Personal access token",
+        "required": true,
+        "editable": true,
+        "help": "Token that reads the projects of the Searcherries account that created it. A paid plan (Starter or Pro, an active trial counts) is required. You can obtain your personal access token on the [MCP page](https://app.searcherries.com/mcp) in your Searcherries account: open the **Other clients** tab, click **Create token** and copy the token, which is shown once. Tokens created for an MCP client work too. Revoking a token on that page disconnects it here as well."
+    }
+]

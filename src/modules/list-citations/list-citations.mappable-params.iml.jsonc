@@ -1,0 +1,123 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project",
+        "required": true,
+        "options": {
+            "store": "rpc://rpcProjects",
+            "nested": [
+                {
+                    "name": "prompt_id",
+                    "type": "select",
+                    "label": "Customer question",
+                    "options": "rpc://rpcQuestions",
+                    "help": "Restricts the citations to one tracked customer question of the project. If left empty, every question is included."
+                }
+            ]
+        },
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period, anchored to the latest completed check. A period without enough history falls back to the nearest available one. If left empty, `last_30_days` is used."
+    },
+    {
+        "name": "group_by",
+        "type": "select",
+        "label": "Group by",
+        "default": "url",
+        "options": [
+            {
+                "label": "Cited URLs",
+                "value": "url"
+            },
+            {
+                "label": "Cited domains",
+                "value": "domain"
+            }
+        ],
+        "help": "`url` returns one row per cited URL with its citation count, platforms, the questions it appeared for and whether it belongs to the project website. `domain` returns the most-cited domains. If left empty, `url` is used."
+    },
+    {
+        "name": "platform",
+        "type": "select",
+        "label": "AI platform",
+        "options": [
+            {
+                "label": "ChatGPT",
+                "value": "chatgpt"
+            },
+            {
+                "label": "Perplexity",
+                "value": "perplexity"
+            },
+            {
+                "label": "Google AI Overviews",
+                "value": "ai_overviews"
+            },
+            {
+                "label": "Gemini",
+                "value": "gemini"
+            },
+            {
+                "label": "Claude",
+                "value": "claude"
+            },
+            {
+                "label": "Grok",
+                "value": "grok"
+            }
+        ],
+        "help": "Restricts the cited URLs to one AI platform (URL grouping only). If left empty, every platform is included."
+    },
+    {
+        "name": "url_contains",
+        "type": "text",
+        "label": "URL contains",
+        "validate": {
+            "max": 300
+        },
+        "help": "Case-insensitive text the cited URL must contain (URL grouping only). For example, `reddit.com` or `/compare/`."
+    },
+    {
+        "name": "own_site_only",
+        "type": "boolean",
+        "label": "Own site only",
+        "required": true,
+        "default": false,
+        "help": "Keeps only the URLs on the project website, to see which of your own pages the AI platforms cite (URL grouping only)."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "help": "Maximum number of cited URLs or domains to return and work with during one execution cycle. For information about setting limits, see our [Help Center](https://help.make.com/types-of-modules#b3ZEQ).",
+        "default": 10
+    }
+]

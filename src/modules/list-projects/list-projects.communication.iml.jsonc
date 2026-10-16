@@ -1,0 +1,10 @@
+{
+    // GET /projects returns every project of the account in one response (no pagination).
+    "url": "/projects",
+    "method": "GET",
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.projects}}",
+        "output": "{{item}}"
+    }
+}

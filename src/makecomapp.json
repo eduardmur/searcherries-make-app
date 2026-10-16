@@ -1,0 +1,214 @@
+{
+    "fileVersion": 1,
+    "generalCodeFiles": {
+        "base": "general/base.iml.jsonc",
+        "common": "general/common.json",
+        "readme": "README.md",
+        "groups": "modules/groups.json"
+    },
+    "components": {
+        "connection": {
+            "personalAccessToken": {
+                "label": "Searcherries",
+                "connectionType": "basic",
+                "codeFiles": {
+                    "communication": "connections/personal-access-token/personal-access-token.communication.iml.jsonc",
+                    "params": "connections/personal-access-token/personal-access-token.params.iml.jsonc",
+                    "common": "connections/personal-access-token/personal-access-token.common.json"
+                }
+            }
+        },
+        "webhook": {},
+        "module": {
+            "listProjects": {
+                "label": "List projects",
+                "description": "Returns a list of the projects of the connected Searcherries account with their status, tracked AI platforms, connected data sources and stored data counts.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-projects/list-projects.communication.iml.jsonc",
+                    "staticParams": "modules/list-projects/list-projects.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-projects/list-projects.mappable-params.iml.jsonc",
+                    "interface": "modules/list-projects/list-projects.interface.iml.jsonc",
+                    "samples": "modules/list-projects/list-projects.samples.iml.jsonc"
+                }
+            },
+            "getProjectSummary": {
+                "label": "Get a project summary",
+                "description": "Returns a compact snapshot of a project: profile, tracked customer questions, AI visibility KPIs, answer insights, top competitors and cited domains, 30-day search and AI-traffic totals, connection health and the latest recommendation.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-project-summary/get-project-summary.communication.iml.jsonc",
+                    "staticParams": "modules/get-project-summary/get-project-summary.static-params.iml.jsonc",
+                    "mappableParams": "modules/get-project-summary/get-project-summary.mappable-params.iml.jsonc",
+                    "interface": "modules/get-project-summary/get-project-summary.interface.iml.jsonc",
+                    "samples": "modules/get-project-summary/get-project-summary.samples.iml.jsonc"
+                }
+            },
+            "getActionPlan": {
+                "label": "Get an action plan",
+                "description": "Returns prioritized next steps for a project for a business, marketing or SEO audience, each with dated evidence, a suggested owner, a success measure and a link to the matching Searcherries report.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-action-plan/get-action-plan.communication.iml.jsonc",
+                    "staticParams": "modules/get-action-plan/get-action-plan.static-params.iml.jsonc",
+                    "mappableParams": "modules/get-action-plan/get-action-plan.mappable-params.iml.jsonc",
+                    "interface": "modules/get-action-plan/get-action-plan.interface.iml.jsonc",
+                    "samples": "modules/get-action-plan/get-action-plan.samples.iml.jsonc"
+                }
+            },
+            "listAnswers": {
+                "label": "Search AI answers",
+                "description": "Returns a list of the AI answers stored for a project's customer questions, one per check and platform, with their judgments (prominence, sentiment, drawback, evidence quote), cited URLs and the web searches the platform ran.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-answers/list-answers.communication.iml.jsonc",
+                    "staticParams": "modules/list-answers/list-answers.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-answers/list-answers.mappable-params.iml.jsonc",
+                    "interface": "modules/list-answers/list-answers.interface.iml.jsonc",
+                    "samples": "modules/list-answers/list-answers.samples.iml.jsonc"
+                }
+            },
+            "listCompetitors": {
+                "label": "List competitors",
+                "description": "Returns a list of the brands the AI platforms name for a project's questions, ranked by visibility for the period, or the stored month-by-month snapshots.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-competitors/list-competitors.communication.iml.jsonc",
+                    "staticParams": "modules/list-competitors/list-competitors.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-competitors/list-competitors.mappable-params.iml.jsonc",
+                    "interface": "modules/list-competitors/list-competitors.interface.iml.jsonc",
+                    "samples": "modules/list-competitors/list-competitors.samples.iml.jsonc"
+                }
+            },
+            "getCompetitor": {
+                "label": "Get a competitor",
+                "description": "Returns one competitor of a project by its brand name or a fragment of it, with per-platform mentions, positions, citations and every highlight the AI platforms gave it.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-competitor/get-competitor.communication.iml.jsonc",
+                    "staticParams": "modules/get-competitor/get-competitor.static-params.iml.jsonc",
+                    "mappableParams": "modules/get-competitor/get-competitor.mappable-params.iml.jsonc",
+                    "interface": "modules/get-competitor/get-competitor.interface.iml.jsonc",
+                    "samples": "modules/get-competitor/get-competitor.samples.iml.jsonc"
+                }
+            },
+            "listCitations": {
+                "label": "Search citations",
+                "description": "Returns a list of the URLs or domains the AI platforms cite when answering a project's questions in the period, with citation counts, platforms and the questions they appeared for.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-citations/list-citations.communication.iml.jsonc",
+                    "staticParams": "modules/list-citations/list-citations.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-citations/list-citations.mappable-params.iml.jsonc",
+                    "interface": "modules/list-citations/list-citations.interface.iml.jsonc",
+                    "samples": "modules/list-citations/list-citations.samples.iml.jsonc"
+                }
+            },
+            "getSearchPerformance": {
+                "label": "Get search performance",
+                "description": "Returns the Google Search Console or Bing Webmaster Tools data stored for a project and one rolling window: totals and top lists, or one list dataset such as top queries, opportunities, trends, the daily series or the monthly history.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-search-performance/get-search-performance.communication.iml.jsonc",
+                    "staticParams": "modules/get-search-performance/get-search-performance.static-params.iml.jsonc",
+                    "mappableParams": "modules/get-search-performance/get-search-performance.mappable-params.iml.jsonc",
+                    "interface": "modules/get-search-performance/get-search-performance.interface.iml.jsonc",
+                    "samples": "modules/get-search-performance/get-search-performance.samples.iml.jsonc"
+                }
+            },
+            "getAiTraffic": {
+                "label": "Get AI traffic",
+                "description": "Returns the Google Analytics 4 traffic from AI assistants and AI Overviews stored for a project and one rolling window: totals per AI source, landing pages, the daily series or the monthly history.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-ai-traffic/get-ai-traffic.communication.iml.jsonc",
+                    "staticParams": "modules/get-ai-traffic/get-ai-traffic.static-params.iml.jsonc",
+                    "mappableParams": "modules/get-ai-traffic/get-ai-traffic.mappable-params.iml.jsonc",
+                    "interface": "modules/get-ai-traffic/get-ai-traffic.interface.iml.jsonc",
+                    "samples": "modules/get-ai-traffic/get-ai-traffic.samples.iml.jsonc"
+                }
+            },
+            "makeApiCall": {
+                "label": "Make an API call",
+                "description": "Sends a custom API call to Searcherries. You can use this to call endpoints that aren't covered by existing modules.",
+                "moduleType": "universal",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/make-api-call/make-api-call.communication.iml.jsonc",
+                    "staticParams": "modules/make-api-call/make-api-call.static-params.iml.jsonc",
+                    "mappableParams": "modules/make-api-call/make-api-call.mappable-params.iml.jsonc",
+                    "interface": "modules/make-api-call/make-api-call.interface.iml.jsonc",
+                    "samples": "modules/make-api-call/make-api-call.samples.iml.jsonc"
+                }
+            }
+        },
+        "rpc": {
+            "rpcProjects": {
+                "label": "Projects",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "rpcs/rpc-projects/rpc-projects.communication.iml.jsonc",
+                    "params": "rpcs/rpc-projects/rpc-projects.params.iml.jsonc"
+                }
+            },
+            "rpcQuestions": {
+                "label": "Customer questions of a project",
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "rpcs/rpc-questions/rpc-questions.communication.iml.jsonc",
+                    "params": "rpcs/rpc-questions/rpc-questions.params.iml.jsonc"
+                }
+            }
+        },
+        "function": {},
+        "endpoint": {}
+    },
+    "origins": [
+        {
+            "label": "Searcherries (production)",
+            "baseUrl": "https://eu1.make.com/api",
+            "appId": "searcherries",
+            "appVersion": 1,
+            "idMapping": {
+                "connection": [],
+                "webhook": [],
+                "module": [],
+                "rpc": [],
+                "function": [],
+                "endpoint": []
+            },
+            "apikeyFile": "../.secrets/apikey"
+        }
+    ]
+}

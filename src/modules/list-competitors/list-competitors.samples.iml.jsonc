@@ -1,0 +1,35 @@
+{
+    "rank": 1,
+    "competitor_name": "Mixpanel",
+    "competitor_website": "https://mixpanel.com",
+    "is_own_brand": false,
+    "visibility_percentage": 71.5,
+    "average_position": 1.6,
+    "mention_count": 103,
+    "citation_count": 22,
+    "platforms_mentioning": 3,
+    "platform_mentions": {
+        "chatgpt": 44,
+        "perplexity": 37,
+        "ai_overviews": 22
+    },
+    "platform_average_positions": {
+        "chatgpt": 1.4,
+        "perplexity": 1.7,
+        "ai_overviews": 1.9
+    },
+    "platform_citations": {
+        "chatgpt": 9,
+        "perplexity": 11,
+        "ai_overviews": 2
+    },
+    "platform_highlights": {
+        "chatgpt": [
+            "Mature event analytics with strong funnel reports.",
+            "Pricing climbs quickly with event volume."
+        ],
+        "perplexity": [
+            "Often the default pick for product teams."
+        ]
+    }
+}

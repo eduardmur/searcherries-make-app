@@ -1,0 +1,181 @@
+[
+    {
+        "name": "project",
+        "type": "collection",
+        "label": "Project",
+        "spec": [
+            {
+                "name": "id",
+                "type": "integer",
+                "label": "ID"
+            },
+            {
+                "name": "brand_name",
+                "type": "text",
+                "label": "Brand name"
+            },
+            {
+                "name": "brand_website",
+                "type": "text",
+                "label": "Brand website"
+            },
+            {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+            }
+        ]
+    },
+    {
+        "name": "dataset",
+        "type": "text",
+        "label": "Dataset"
+    },
+    {
+        "name": "period",
+        "type": "collection",
+        "label": "Period",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "requested",
+                "type": "text",
+                "label": "Requested"
+            },
+            {
+                "name": "start",
+                "type": "text",
+                "label": "Start"
+            },
+            {
+                "name": "end",
+                "type": "text",
+                "label": "End"
+            },
+            {
+                "name": "days",
+                "type": "integer",
+                "label": "Days"
+            },
+            {
+                "name": "anchored_to_latest_check",
+                "type": "text",
+                "label": "Anchored to latest check"
+            },
+            {
+                "name": "available_periods",
+                "type": "array",
+                "label": "Available periods",
+                "spec": {
+                    "type": "text",
+                    "label": "Available period"
+                }
+            }
+        ]
+    },
+    {
+        "name": "found",
+        "type": "boolean",
+        "label": "Found"
+    },
+    {
+        "name": "competitor",
+        "type": "collection",
+        "label": "Competitor",
+        "spec": [
+            {
+                "name": "rank",
+                "type": "integer",
+                "label": "Rank"
+            },
+            {
+                "name": "competitor_name",
+                "type": "text",
+                "label": "Competitor name"
+            },
+            {
+                "name": "competitor_website",
+                "type": "text",
+                "label": "Competitor website"
+            },
+            {
+                "name": "is_own_brand",
+                "type": "boolean",
+                "label": "Is own brand"
+            },
+            {
+                "name": "visibility_percentage",
+                "type": "number",
+                "label": "Visibility percentage"
+            },
+            {
+                "name": "average_position",
+                "type": "number",
+                "label": "Average position"
+            },
+            {
+                "name": "mention_count",
+                "type": "integer",
+                "label": "Mention count"
+            },
+            {
+                "name": "citation_count",
+                "type": "integer",
+                "label": "Citation count"
+            },
+            {
+                "name": "platforms_mentioning",
+                "type": "integer",
+                "label": "Platforms mentioning"
+            },
+            {
+                "name": "platform_mentions",
+                "type": "collection",
+                "label": "Platform mentions",
+                "spec": []
+            },
+            {
+                "name": "platform_average_positions",
+                "type": "collection",
+                "label": "Platform average positions",
+                "spec": []
+            },
+            {
+                "name": "platform_citations",
+                "type": "collection",
+                "label": "Platform citations",
+                "spec": []
+            },
+            {
+                "name": "platform_highlights",
+                "type": "collection",
+                "label": "Platform highlights",
+                "spec": []
+            },
+            {
+                "name": "platform_positions",
+                "type": "collection",
+                "label": "Platform positions",
+                "spec": []
+            },
+            {
+                "name": "name_variants",
+                "type": "array",
+                "label": "Name variants",
+                "spec": {
+                    "type": "text",
+                    "label": "Name variant"
+                }
+            }
+        ]
+    },
+    {
+        "name": "reason",
+        "type": "text",
+        "label": "Reason"
+    }
+]

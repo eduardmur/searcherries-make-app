@@ -1,0 +1,23 @@
+{
+    "url": "/projects/{{parameters.project}}/competitors",
+    "method": "GET",
+    "qs": {
+        "period": "{{ifempty(parameters.period, undefined)}}",
+        "dataset": "{{ifempty(parameters.dataset, 'ranking')}}",
+        "include_highlights": "{{ifempty(parameters.include_highlights, undefined)}}",
+        "highlights_per_platform": "{{if(parameters.include_highlights, ifempty(parameters.highlights_per_platform, undefined), undefined)}}",
+        // Largest page the ranking serves (also the most months the history returns).
+        "limit": 50
+    },
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.rows}}",
+        "output": "{{item}}"
+    },
+    "pagination": {
+        "qs": {
+            "offset": "{{body.pagination.offset + body.pagination.returned}}"
+        },
+        "condition": "{{body.pagination.has_more}}"
+    }
+}

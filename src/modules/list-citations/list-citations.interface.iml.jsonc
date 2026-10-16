@@ -1,0 +1,55 @@
+[
+    {
+        "name": "url",
+        "type": "text",
+        "label": "URL"
+    },
+    {
+        "name": "domain",
+        "type": "text",
+        "label": "Domain"
+    },
+    {
+        "name": "is_own_site",
+        "type": "boolean",
+        "label": "Is own site"
+    },
+    {
+        "name": "mention_count",
+        "type": "integer",
+        "label": "Mention count"
+    },
+    {
+        "name": "platforms",
+        "type": "array",
+        "label": "Platforms",
+        "spec": {
+            "type": "text",
+            "label": "Platform"
+        }
+    },
+    {
+        "name": "prompt_ids",
+        "type": "array",
+        "label": "Prompt IDs",
+        "spec": {
+            "type": "integer",
+            "label": "Prompt ID"
+        }
+    },
+    {
+        "name": "website_domain",
+        "type": "text",
+        "label": "Website domain"
+    },
+    {
+        "name": "citation_count",
+        "type": "integer",
+        "label": "Citation count"
+    },
+    {
+        "name": "citation_percentage",
+        "type": "number",
+        "label": "Citation percentage"
+    }
+]

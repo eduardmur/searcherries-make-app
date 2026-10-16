@@ -1,0 +1,17 @@
+{
+    "url": "https://www.g2.com/categories/product-analytics",
+    "domain": "g2.com",
+    "is_own_site": false,
+    "mention_count": 27,
+    "platforms": [
+        "chatgpt",
+        "perplexity"
+    ],
+    "prompt_ids": [
+        456,
+        457
+    ],
+    "website_domain": "g2.com",
+    "citation_count": 27,
+    "citation_percentage": 14.2
+}

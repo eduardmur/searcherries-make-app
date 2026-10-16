@@ -1,0 +1,7 @@
+{
+  "apps-sdk.localDev.defaultJsoncFileExtension": "jsonc",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}

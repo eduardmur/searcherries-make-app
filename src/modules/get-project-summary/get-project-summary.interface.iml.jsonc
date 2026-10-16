@@ -1,0 +1,512 @@
+[
+    {
+        "name": "project_id",
+        "type": "integer",
+        "label": "Project ID"
+    },
+    {
+        "name": "generated_at",
+        "type": "date",
+        "label": "Generated at"
+    },
+    {
+        "name": "period",
+        "type": "collection",
+        "label": "Period",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "requested",
+                "type": "text",
+                "label": "Requested"
+            },
+            {
+                "name": "start",
+                "type": "text",
+                "label": "Start"
+            },
+            {
+                "name": "end",
+                "type": "text",
+                "label": "End"
+            },
+            {
+                "name": "days",
+                "type": "integer",
+                "label": "Days"
+            },
+            {
+                "name": "anchored_to_latest_check",
+                "type": "text",
+                "label": "Anchored to latest check"
+            },
+            {
+                "name": "available_periods",
+                "type": "array",
+                "label": "Available periods",
+                "spec": {
+                    "type": "text",
+                    "label": "Available period"
+                }
+            }
+        ]
+    },
+    {
+        "name": "included",
+        "type": "array",
+        "label": "Included",
+        "spec": {
+            "type": "text",
+            "label": "Included"
+        }
+    },
+    {
+        "name": "read_only",
+        "type": "boolean",
+        "label": "Read only"
+    },
+    {
+        "name": "report_url",
+        "type": "url",
+        "label": "Report URL"
+    },
+    {
+        "name": "profile",
+        "type": "collection",
+        "label": "Profile",
+        "spec": [
+            {
+                "name": "brand_name",
+                "type": "text",
+                "label": "Brand name"
+            },
+            {
+                "name": "brand_website",
+                "type": "text",
+                "label": "Brand website"
+            },
+            {
+                "name": "domain",
+                "type": "text",
+                "label": "Domain"
+            },
+            {
+                "name": "description",
+                "type": "text",
+                "label": "Description"
+            },
+            {
+                "name": "country",
+                "type": "text",
+                "label": "Country"
+            },
+            {
+                "name": "country_name",
+                "type": "text",
+                "label": "Country name"
+            },
+            {
+                "name": "language",
+                "type": "text",
+                "label": "Language"
+            },
+            {
+                "name": "language_name",
+                "type": "text",
+                "label": "Language name"
+            },
+            {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+            },
+            {
+                "name": "ai_platforms",
+                "type": "array",
+                "label": "AI platforms",
+                "spec": {
+                    "type": "text",
+                    "label": "AI platform"
+                }
+            },
+            {
+                "name": "last_checked_at",
+                "type": "date",
+                "label": "Last checked at"
+            },
+            {
+                "name": "next_check_date",
+                "type": "text",
+                "label": "Next check date"
+            },
+            {
+                "name": "business_profile",
+                "type": "collection",
+                "label": "Business profile",
+                "spec": []
+            }
+        ]
+    },
+    {
+        "name": "questions",
+        "type": "collection",
+        "label": "Questions",
+        "spec": [
+            {
+                "name": "active_total",
+                "type": "integer",
+                "label": "Active total"
+            },
+            {
+                "name": "primary",
+                "type": "collection",
+                "label": "Primary",
+                "spec": [
+                    {
+                        "name": "id",
+                        "type": "integer",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "question",
+                        "type": "text",
+                        "label": "Question"
+                    },
+                    {
+                        "name": "cadence",
+                        "type": "text",
+                        "label": "Cadence"
+                    },
+                    {
+                        "name": "last_checked_at",
+                        "type": "date",
+                        "label": "Last checked at"
+                    },
+                    {
+                        "name": "next_check_date",
+                        "type": "text",
+                        "label": "Next check date"
+                    }
+                ]
+            },
+            {
+                "name": "additional",
+                "type": "array",
+                "label": "Additional",
+                "spec": [
+                    {
+                        "name": "id",
+                        "type": "integer",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "question",
+                        "type": "text",
+                        "label": "Question"
+                    },
+                    {
+                        "name": "cadence",
+                        "type": "text",
+                        "label": "Cadence"
+                    },
+                    {
+                        "name": "last_checked_at",
+                        "type": "date",
+                        "label": "Last checked at"
+                    },
+                    {
+                        "name": "next_check_date",
+                        "type": "text",
+                        "label": "Next check date"
+                    }
+                ]
+            },
+            {
+                "name": "additional_not_shown",
+                "type": "integer",
+                "label": "Additional not shown"
+            }
+        ]
+    },
+    {
+        "name": "ai_visibility",
+        "type": "collection",
+        "label": "AI visibility",
+        "spec": [
+            {
+                "name": "available",
+                "type": "boolean",
+                "label": "Available"
+            },
+            {
+                "name": "visibility_score",
+                "type": "number",
+                "label": "Visibility score"
+            },
+            {
+                "name": "mentions_percentage",
+                "type": "number",
+                "label": "Mentions percentage"
+            },
+            {
+                "name": "total_mentions",
+                "type": "integer",
+                "label": "Total mentions"
+            },
+            {
+                "name": "total_checks",
+                "type": "integer",
+                "label": "Total checks"
+            },
+            {
+                "name": "mentions_by_platform",
+                "type": "collection",
+                "label": "Mentions by platform",
+                "spec": []
+            },
+            {
+                "name": "total_citations",
+                "type": "integer",
+                "label": "Total citations"
+            },
+            {
+                "name": "average_position",
+                "type": "number",
+                "label": "Average position"
+            },
+            {
+                "name": "previous_period",
+                "type": "collection",
+                "label": "Previous period",
+                "spec": []
+            },
+            {
+                "name": "share_of_voice",
+                "type": "collection",
+                "label": "Share of voice",
+                "spec": []
+            }
+        ]
+    },
+    {
+        "name": "answer_insights",
+        "type": "collection",
+        "label": "Answer insights",
+        "spec": [
+            {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+            },
+            {
+                "name": "answers",
+                "type": "integer",
+                "label": "Answers"
+            },
+            {
+                "name": "analyzed",
+                "type": "integer",
+                "label": "Analyzed"
+            },
+            {
+                "name": "usable",
+                "type": "integer",
+                "label": "Usable"
+            },
+            {
+                "name": "named_share",
+                "type": "number",
+                "label": "Named share"
+            },
+            {
+                "name": "top_pick_share",
+                "type": "number",
+                "label": "Top pick share"
+            },
+            {
+                "name": "negative",
+                "type": "integer",
+                "label": "Negative"
+            },
+            {
+                "name": "drawback",
+                "type": "integer",
+                "label": "Drawback"
+            },
+            {
+                "name": "off_topic",
+                "type": "integer",
+                "label": "Off topic"
+            }
+        ]
+    },
+    {
+        "name": "competitors",
+        "type": "collection",
+        "label": "Competitors",
+        "spec": [
+            {
+                "name": "ranked_by",
+                "type": "text",
+                "label": "Ranked by"
+            },
+            {
+                "name": "own_brand",
+                "type": "collection",
+                "label": "Own brand",
+                "spec": []
+            },
+            {
+                "name": "tracked_competitors",
+                "type": "integer",
+                "label": "Tracked competitors"
+            },
+            {
+                "name": "top",
+                "type": "array",
+                "label": "Top"
+            }
+        ]
+    },
+    {
+        "name": "citations",
+        "type": "collection",
+        "label": "Citations",
+        "spec": [
+            {
+                "name": "top_domains",
+                "type": "array",
+                "label": "Top domains",
+                "spec": [
+                    {
+                        "name": "website_domain",
+                        "type": "text",
+                        "label": "Website domain"
+                    },
+                    {
+                        "name": "citation_count",
+                        "type": "integer",
+                        "label": "Citation count"
+                    },
+                    {
+                        "name": "citation_percentage",
+                        "type": "number",
+                        "label": "Citation percentage"
+                    },
+                    {
+                        "name": "is_own_site",
+                        "type": "boolean",
+                        "label": "Is own site"
+                    }
+                ]
+            },
+            {
+                "name": "own_site_in_top",
+                "type": "boolean",
+                "label": "Own site in top"
+            }
+        ]
+    },
+    {
+        "name": "search",
+        "type": "collection",
+        "label": "Search",
+        "spec": []
+    },
+    {
+        "name": "ai_traffic",
+        "type": "collection",
+        "label": "AI traffic",
+        "spec": []
+    },
+    {
+        "name": "connections",
+        "type": "collection",
+        "label": "Connections",
+        "spec": [
+            {
+                "name": "ga4",
+                "type": "collection",
+                "label": "GA4",
+                "spec": [
+                    {
+                        "name": "connected",
+                        "type": "boolean",
+                        "label": "Connected"
+                    },
+                    {
+                        "name": "periods_available",
+                        "type": "array",
+                        "label": "Periods available",
+                        "spec": {
+                            "type": "text",
+                            "label": "Periods available"
+                        }
+                    },
+                    {
+                        "name": "latest_fetched_at",
+                        "type": "date",
+                        "label": "Latest fetched at"
+                    },
+                    {
+                        "name": "is_stale",
+                        "type": "boolean",
+                        "label": "Is stale"
+                    }
+                ]
+            },
+            {
+                "name": "google_search_console",
+                "type": "collection",
+                "label": "Google search console",
+                "spec": [
+                    {
+                        "name": "connected",
+                        "type": "boolean",
+                        "label": "Connected"
+                    }
+                ]
+            },
+            {
+                "name": "bing_webmaster_tools",
+                "type": "collection",
+                "label": "Bing webmaster tools",
+                "spec": [
+                    {
+                        "name": "connected",
+                        "type": "boolean",
+                        "label": "Connected"
+                    },
+                    {
+                        "name": "needs_reauth",
+                        "type": "boolean",
+                        "label": "Needs reauth"
+                    }
+                ]
+            },
+            {
+                "name": "ai_checks",
+                "type": "collection",
+                "label": "AI checks",
+                "spec": []
+            }
+        ]
+    },
+    {
+        "name": "recommendations",
+        "type": "collection",
+        "label": "Recommendations",
+        "spec": [
+            {
+                "name": "latest",
+                "type": "collection",
+                "label": "Latest",
+                "spec": []
+            }
+        ]
+    }
+]

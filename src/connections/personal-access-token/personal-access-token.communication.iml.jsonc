@@ -1,0 +1,35 @@
+{
+    // Validates the token with the cheapest authenticated call of the API and
+    // labels the connection with the first project of the account.
+    "url": "https://app.searcherries.com/api/v1/projects",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json",
+        "authorization": "Bearer {{parameters.personal_access_token}}"
+    },
+    "response": {
+        "valid": "{{!body.error && statusCode == 200}}",
+        "error": {
+            "message": "[{{statusCode}}] {{ifempty(body.error.message, ifempty(body.message, 'Searcherries returned an unexpected error.'))}}",
+            "401": {
+                "message": "[401] {{ifempty(body.error.message, 'The personal access token was rejected.')}} Paste a token created on https://app.searcherries.com/mcp (tab Other clients); it is shown once when created."
+            },
+            "403": {
+                "message": "[403] {{ifempty(body.error.message, 'Access denied.')}}{{if(body.error.code == 'paid_plan_required', ' The Searcherries REST API needs a paid plan (Starter or Pro, an active trial counts). Choose a plan at ' + ifempty(body.error.plans_url, 'https://app.searcherries.com/plans') + '.', '')}}{{if(body.error.code == 'insufficient_scope', ' This token cannot read the API. Create a new personal access token on https://app.searcherries.com/mcp (tab Other clients).', '')}}"
+            },
+            "429": {
+                "type": "RateLimitError",
+                "message": "[429] {{ifempty(body.error.message, 'Too many requests.')}} Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
+            }
+        },
+        "metadata": {
+            "type": "text",
+            "value": "{{if(body.total > 1, body.projects[1].brand_name + ' +' + (body.total - 1) + ' more', ifempty(body.projects[1].brand_name, 'no projects yet'))}}"
+        }
+    },
+    "log": {
+        "sanitize": [
+            "request.headers.authorization"
+        ]
+    }
+}

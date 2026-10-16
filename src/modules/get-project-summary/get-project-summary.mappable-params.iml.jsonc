@@ -1,0 +1,89 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project ID",
+        "required": true,
+        "mode": "edit",
+        "options": "rpc://rpcProjects",
+        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period, anchored to the latest completed check. A period without enough history falls back to the nearest available one; the **Period** field of the output says which one was used. If left empty, `last_30_days` is used."
+    },
+    {
+        "name": "include",
+        "type": "select",
+        "label": "Blocks",
+        "multiple": true,
+        "options": [
+            {
+                "label": "Profile and business profile",
+                "value": "profile"
+            },
+            {
+                "label": "Tracked customer questions",
+                "value": "questions"
+            },
+            {
+                "label": "AI visibility KPIs",
+                "value": "ai_visibility"
+            },
+            {
+                "label": "Answer insights",
+                "value": "answer_insights"
+            },
+            {
+                "label": "Top competitors",
+                "value": "competitors"
+            },
+            {
+                "label": "Most-cited domains",
+                "value": "citations"
+            },
+            {
+                "label": "Search Console and Bing totals (30 days)",
+                "value": "search"
+            },
+            {
+                "label": "GA4 AI traffic (30 days)",
+                "value": "ai_traffic"
+            },
+            {
+                "label": "Connection health",
+                "value": "connections"
+            },
+            {
+                "label": "Latest recommendation",
+                "value": "recommendations"
+            }
+        ],
+        "help": "Blocks of the summary to return. If left empty, the whole summary (about 16 KB) is returned."
+    }
+]

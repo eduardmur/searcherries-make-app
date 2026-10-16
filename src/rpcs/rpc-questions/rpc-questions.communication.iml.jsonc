@@ -1,0 +1,21 @@
+{
+    // Options for the Customer question select, nested under the Project select:
+    // the primary question (checked daily) followed by the additional ones.
+    // `parameters.project` is inherited from the parent select.
+    "url": "/projects/{{parameters.project}}",
+    "method": "GET",
+    "qs": {
+        "include": "questions"
+    },
+    "response": {
+        "limit": 500,
+        "iterate": {
+            "container": "{{merge(add(emptyarray, body.questions.primary), ifempty(body.questions.additional, emptyarray))}}",
+            "condition": "{{item.id}}"
+        },
+        "output": {
+            "label": "{{item.question}}{{if(item.cadence == 'daily', ' (primary question, checked daily)', '')}}",
+            "value": "{{item.id}}"
+        }
+    }
+}

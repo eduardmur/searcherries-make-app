@@ -1,0 +1,19 @@
+{
+    // The Searcherries REST API is read-only, so only GET is offered. The base
+    // headers (accept + bearer token) are inherited; user headers are merged in.
+    "url": "https://app.searcherries.com/api/{{parameters.url}}",
+    "method": "GET",
+    "headers": {
+        "{{...}}": "{{toCollection(parameters.headers, 'key', 'value')}}"
+    },
+    "qs": {
+        "{{...}}": "{{toCollection(parameters.qs, 'key', 'value')}}"
+    },
+    "response": {
+        "output": {
+            "body": "{{body}}",
+            "headers": "{{headers}}",
+            "statusCode": "{{statusCode}}"
+        }
+    }
+}

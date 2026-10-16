@@ -1,0 +1,19 @@
+{
+  "name": "searcherries-make-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Make (make.com) custom app for the Searcherries REST API, in the local-development layout of the Make Apps Editor for VS Code.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "generate:interfaces": "node scripts/generate-interfaces.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/generate-interfaces.mjs --check && node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0",
+    "jsonc-parser": "^3.3.1"
+  }
+}

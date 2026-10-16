@@ -1,0 +1,71 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project ID",
+        "required": true,
+        "mode": "edit",
+        "options": "rpc://rpcProjects",
+        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+    },
+    {
+        "name": "audience",
+        "type": "select",
+        "label": "Audience",
+        "default": "business",
+        "options": [
+            {
+                "label": "Business: traffic and business priorities",
+                "value": "business"
+            },
+            {
+                "label": "Marketing: brand answers and content",
+                "value": "marketing"
+            },
+            {
+                "label": "SEO: search pages and queries",
+                "value": "seo"
+            }
+        ],
+        "help": "Who the plan is for; it changes the order of the actions. If left empty, `business` is used."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period for the answer signals. Search and traffic signals use their own rolling 30-day snapshots. If left empty, `last_30_days` is used."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Maximum actions",
+        "validate": {
+            "min": 1,
+            "max": 10
+        },
+        "help": "Maximum number of actions in the plan, `1` to `10`. Fewer are returned when the evidence is thin. If left empty, `5` actions are returned."
+    }
+]

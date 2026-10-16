@@ -1,0 +1,12 @@
+{
+    "url": "/projects/{{parameters.project}}/action-plan",
+    "method": "GET",
+    "qs": {
+        "audience": "{{ifempty(parameters.audience, 'business')}}",
+        "period": "{{ifempty(parameters.period, undefined)}}",
+        "limit": "{{ifempty(parameters.limit, undefined)}}"
+    },
+    "response": {
+        "output": "{{body}}"
+    }
+}

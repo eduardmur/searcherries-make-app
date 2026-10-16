@@ -1,0 +1,68 @@
+{
+    "project": {
+        "id": 123,
+        "brand_name": "Acme Analytics",
+        "brand_website": "https://acme-analytics.example",
+        "status": "ready"
+    },
+    "dataset": "detail",
+    "period": {
+        "key": "last_30_days",
+        "requested": "last_30_days",
+        "start": "2026-09-16",
+        "end": "2026-10-15",
+        "days": 30,
+        "anchored_to_latest_check": "2026-10-15",
+        "available_periods": [
+            "last_30_days",
+            "last_60_days",
+            "last_90_days",
+            "this_year"
+        ]
+    },
+    "found": true,
+    "competitor": {
+        "rank": 1,
+        "competitor_name": "Mixpanel",
+        "competitor_website": "https://mixpanel.com",
+        "is_own_brand": false,
+        "visibility_percentage": 71.5,
+        "average_position": 1.6,
+        "mention_count": 103,
+        "citation_count": 22,
+        "platforms_mentioning": 3,
+        "platform_mentions": {
+            "chatgpt": 44,
+            "perplexity": 37,
+            "ai_overviews": 22
+        },
+        "platform_average_positions": {
+            "chatgpt": 1.4,
+            "perplexity": 1.7,
+            "ai_overviews": 1.9
+        },
+        "platform_citations": {
+            "chatgpt": 9,
+            "perplexity": 11,
+            "ai_overviews": 2
+        },
+        "platform_highlights": {
+            "chatgpt": [
+                "Mature event analytics with strong funnel reports.",
+                "Pricing climbs quickly with event volume.",
+                "Good SDK coverage for web and mobile."
+            ]
+        },
+        "platform_positions": {
+            "chatgpt": [
+                1,
+                2,
+                1
+            ]
+        },
+        "name_variants": [
+            "Mixpanel",
+            "MixPanel"
+        ]
+    }
+}

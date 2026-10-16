@@ -1,0 +1,12 @@
+{
+    "url": "/projects/{{parameters.project}}",
+    "method": "GET",
+    "qs": {
+        "period": "{{ifempty(parameters.period, undefined)}}",
+        // The API takes the blocks as one comma-separated value.
+        "include": "{{if(length(ifempty(parameters.include, emptyarray)) > 0, join(parameters.include, ','), undefined)}}"
+    },
+    "response": {
+        "output": "{{body}}"
+    }
+}

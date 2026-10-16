@@ -1,0 +1,83 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project",
+        "required": true,
+        "options": "rpc://rpcProjects",
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period, anchored to the latest completed check. A period without enough history falls back to the nearest available one. If left empty, `last_30_days` is used."
+    },
+    {
+        "name": "dataset",
+        "type": "select",
+        "label": "Dataset",
+        "default": "ranking",
+        "options": [
+            {
+                "label": "Ranking: one row per brand, the own brand included",
+                "value": "ranking"
+            },
+            {
+                "label": "History: one row per month",
+                "value": "history"
+            }
+        ],
+        "help": "`ranking` returns one row per brand for the period, ranked by visibility, with mentions, citations, average position and per-platform numbers. `history` returns the stored month-by-month snapshots. For one brand with all its highlights, use the **Get a competitor** module. If left empty, `ranking` is used."
+    },
+    {
+        "name": "include_highlights",
+        "type": "boolean",
+        "label": "Include highlights",
+        "required": true,
+        "default": true,
+        "nested": [
+            {
+                "name": "highlights_per_platform",
+                "type": "uinteger",
+                "label": "Highlights per platform",
+                "validate": {
+                    "min": 0,
+                    "max": 5
+                },
+                "help": "Highlight sentences per platform in each ranking row, `0` to `5`. If left empty, `3` are returned."
+            }
+        ],
+        "help": "Adds a few deduplicated sentences per platform about what the AI platforms say about each brand (ranking only)."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "help": "Maximum number of ranking rows (or history months) to return and work with during one execution cycle. For information about setting limits, see our [Help Center](https://help.make.com/types-of-modules#b3ZEQ).",
+        "default": 10
+    }
+]

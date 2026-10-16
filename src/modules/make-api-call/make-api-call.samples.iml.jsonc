@@ -1,0 +1,19 @@
+{
+    "body": {
+        "total": 1,
+        "projects": [
+            {
+                "id": 123,
+                "brand_name": "Acme Analytics",
+                "brand_website": "https://acme-analytics.example",
+                "status": "ready"
+            }
+        ]
+    },
+    "headers": {
+        "content-type": "application/json",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59"
+    },
+    "statusCode": 200
+}

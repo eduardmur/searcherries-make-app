@@ -1,0 +1,50 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project ID",
+        "required": true,
+        "mode": "edit",
+        "options": "rpc://rpcProjects",
+        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+    },
+    {
+        "name": "competitor",
+        "type": "text",
+        "label": "Competitor",
+        "required": true,
+        "validate": {
+            "max": 120
+        },
+        "help": "Brand name or a fragment of it. For example, `Mixpanel`. Use the **List competitors** module to see the brand names Searcherries tracks for the project."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period, anchored to the latest completed check. A period without enough history falls back to the nearest available one. If left empty, `last_30_days` is used."
+    }
+]

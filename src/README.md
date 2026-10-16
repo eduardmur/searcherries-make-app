@@ -1,0 +1,38 @@
+Searcherries
+============
+
+Connect your Make scenarios to the AI visibility, search and traffic data Searcherries stores for your projects: how your brand appears in ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude and Grok, the competitors and sources those platforms name, Google Search Console and Bing Webmaster Tools snapshots, GA4 traffic from AI assistants, and a prioritized action plan.
+
+The app reads the [Searcherries REST API](https://searcherries.com/docs/api/overview). It never changes a project and never calls Google, Bing or an AI platform on your behalf: every module returns data Searcherries has already collected, and each output says when it was fetched.
+
+Connection
+----------
+
+1. Sign in to Searcherries and open <https://app.searcherries.com/mcp>.
+2. Open the **Other clients** tab, click **Create token** and copy the personal access token (it is shown once).
+3. In Make, create a Searcherries connection and paste the token.
+
+A paid plan (Starter or Pro, an active trial counts) is required. The connection is labelled with the first project of the account.
+
+Modules
+-------
+
+| Module | Returns |
+| --- | --- |
+| List projects | The projects of the account with status, tracked AI platforms, connected sources and data counts. |
+| Get a project summary | One compact snapshot of a project (profile, questions, KPIs, insights, competitors, citations, search and AI traffic totals, connections, latest recommendation). |
+| Get an action plan | Up to ten prioritized actions with evidence, owner, success measure and report link. |
+| Search AI answers | Stored AI answers with their judgments, cited URLs and web searches; filter by question, platform, prominence, flags and dates. |
+| List competitors | Brands the AI platforms name, ranked for the period, or the month-by-month history. |
+| Get a competitor | One brand with every highlight and per-platform numbers. |
+| Search citations | Cited URLs or domains, with platforms and the questions they appeared for. |
+| Get search performance | Google Search Console or Bing data for one window: summary, top lists, opportunities, trends, daily series or monthly history. |
+| Get AI traffic | GA4 traffic from AI assistants for one window: summary, sources, landing pages, daily series or monthly history. |
+| Make an API call | Any `GET` endpoint of the API. |
+
+Limits
+------
+
+60 requests per minute per account on Starter, 120 on Pro. Paginated modules fetch further pages on their own up to the module's **Limit**.
+
+Documentation: <https://searcherries.com/docs/api/endpoints> · Support: <https://searcherries.com/docs/account/support>

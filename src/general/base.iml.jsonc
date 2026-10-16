@@ -1,0 +1,38 @@
+{
+    // Shared by every module and RPC. The connection parameter is exposed as
+    // `connection.personal_access_token` (see the connection's params file).
+    "baseUrl": "https://app.searcherries.com/api/v1",
+    "headers": {
+        "accept": "application/json",
+        "authorization": "Bearer {{connection.personal_access_token}}"
+    },
+    "response": {
+        // The API answers every error with {"error": {"code", "message", "status", ...}}.
+        // Laravel answers unknown routes with a bare {"message": ...}, hence the fallback.
+        "error": {
+            "message": "[{{statusCode}}] {{ifempty(body.error.message, ifempty(body.message, 'Searcherries returned an unexpected error.'))}}",
+            "401": {
+                "message": "[401] {{ifempty(body.error.message, 'The personal access token was rejected.')}} The token is missing, expired or revoked. Create a new token on https://app.searcherries.com/mcp (tab Other clients) and update this connection."
+            },
+            "403": {
+                "message": "[403] {{ifempty(body.error.message, 'Access denied.')}}{{if(body.error.code == 'paid_plan_required', ' The Searcherries REST API needs a paid plan (Starter or Pro, an active trial counts). Choose a plan at ' + ifempty(body.error.plans_url, 'https://app.searcherries.com/plans') + '.', '')}}{{if(body.error.code == 'insufficient_scope', ' This token cannot read the API. Create a new personal access token on https://app.searcherries.com/mcp (tab Other clients).', '')}}"
+            },
+            "404": {
+                "message": "[404] {{ifempty(body.error.message, ifempty(body.message, 'Not found.'))}} Choose a project of the account that created the token; the List projects module shows them."
+            },
+            "422": {
+                "type": "DataError",
+                "message": "[422] {{ifempty(body.error.message, 'The request parameters are invalid.')}} {{join(flatten(map(toArray(body.error.errors), 'value')), ' ')}}"
+            },
+            "429": {
+                "type": "RateLimitError",
+                "message": "[429] {{ifempty(body.error.message, 'Too many requests.')}} The per-minute budget of the account is used up (60 requests on Starter, 120 on Pro). Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
+            }
+        }
+    },
+    "log": {
+        "sanitize": [
+            "request.headers.authorization"
+        ]
+    }
+}

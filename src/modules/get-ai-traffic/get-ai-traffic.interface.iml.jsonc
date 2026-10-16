@@ -1,0 +1,253 @@
+[
+    {
+        "name": "project",
+        "type": "collection",
+        "label": "Project",
+        "spec": [
+            {
+                "name": "id",
+                "type": "integer",
+                "label": "ID"
+            },
+            {
+                "name": "brand_name",
+                "type": "text",
+                "label": "Brand name"
+            },
+            {
+                "name": "brand_website",
+                "type": "text",
+                "label": "Brand website"
+            },
+            {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+            }
+        ]
+    },
+    {
+        "name": "period",
+        "type": "collection",
+        "label": "Period",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "start",
+                "type": "text",
+                "label": "Start"
+            },
+            {
+                "name": "end",
+                "type": "text",
+                "label": "End"
+            }
+        ]
+    },
+    {
+        "name": "dataset",
+        "type": "text",
+        "label": "Dataset"
+    },
+    {
+        "name": "available_periods",
+        "type": "array",
+        "label": "Available periods",
+        "spec": {
+            "type": "text",
+            "label": "Available period"
+        }
+    },
+    {
+        "name": "available",
+        "type": "boolean",
+        "label": "Available"
+    },
+    {
+        "name": "reason",
+        "type": "text",
+        "label": "Reason"
+    },
+    {
+        "name": "fetched_at",
+        "type": "date",
+        "label": "Fetched at"
+    },
+    {
+        "name": "is_stale",
+        "type": "boolean",
+        "label": "Is stale"
+    },
+    {
+        "name": "measurement_scope",
+        "type": "text",
+        "label": "Measurement scope"
+    },
+    {
+        "name": "interpretation",
+        "type": "text",
+        "label": "Interpretation"
+    },
+    {
+        "name": "all_site",
+        "type": "collection",
+        "label": "All site",
+        "spec": []
+    },
+    {
+        "name": "ai_traffic",
+        "type": "collection",
+        "label": "AI traffic",
+        "spec": []
+    },
+    {
+        "name": "sources",
+        "type": "array",
+        "label": "Sources",
+        "spec": [
+            {
+                "name": "source",
+                "type": "text",
+                "label": "Source"
+            },
+            {
+                "name": "sessions",
+                "type": "integer",
+                "label": "Sessions"
+            },
+            {
+                "name": "users",
+                "type": "integer",
+                "label": "Users"
+            },
+            {
+                "name": "pageviews",
+                "type": "integer",
+                "label": "Pageviews"
+            },
+            {
+                "name": "engaged_sessions",
+                "type": "integer",
+                "label": "Engaged sessions"
+            },
+            {
+                "name": "conversions",
+                "type": "integer",
+                "label": "Conversions"
+            },
+            {
+                "name": "detection_method",
+                "type": "text",
+                "label": "Detection method"
+            },
+            {
+                "name": "landing_pages",
+                "type": "array",
+                "label": "Landing pages"
+            },
+            {
+                "name": "referrers",
+                "type": "array",
+                "label": "Referrers"
+            }
+        ]
+    },
+    {
+        "name": "rows",
+        "type": "array",
+        "label": "Rows",
+        "spec": [
+            {
+                "name": "source",
+                "type": "text",
+                "label": "Source"
+            },
+            {
+                "name": "sessions",
+                "type": "integer",
+                "label": "Sessions"
+            },
+            {
+                "name": "users",
+                "type": "integer",
+                "label": "Users"
+            },
+            {
+                "name": "pageviews",
+                "type": "integer",
+                "label": "Pageviews"
+            },
+            {
+                "name": "engaged_sessions",
+                "type": "integer",
+                "label": "Engaged sessions"
+            },
+            {
+                "name": "conversions",
+                "type": "integer",
+                "label": "Conversions"
+            },
+            {
+                "name": "detection_method",
+                "type": "text",
+                "label": "Detection method"
+            },
+            {
+                "name": "landing_pages",
+                "type": "array",
+                "label": "Landing pages"
+            },
+            {
+                "name": "referrers",
+                "type": "array",
+                "label": "Referrers"
+            },
+            {
+                "name": "path",
+                "type": "text",
+                "label": "Path"
+            }
+        ]
+    },
+    {
+        "name": "pagination",
+        "type": "collection",
+        "label": "Pagination",
+        "spec": [
+            {
+                "name": "offset",
+                "type": "integer",
+                "label": "Offset"
+            },
+            {
+                "name": "limit",
+                "type": "integer",
+                "label": "Limit"
+            },
+            {
+                "name": "returned",
+                "type": "integer",
+                "label": "Returned"
+            },
+            {
+                "name": "total",
+                "type": "integer",
+                "label": "Total"
+            },
+            {
+                "name": "has_more",
+                "type": "boolean",
+                "label": "Has more"
+            }
+        ]
+    },
+    {
+        "name": "granularity",
+        "type": "text",
+        "label": "Granularity"
+    }
+]

@@ -1,0 +1,155 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project",
+        "required": true,
+        "options": {
+            "store": "rpc://rpcProjects",
+            "nested": [
+                {
+                    "name": "prompt_id",
+                    "type": "select",
+                    "label": "Customer question",
+                    "options": "rpc://rpcQuestions",
+                    "help": "Restricts the answers to one tracked customer question of the project. If left empty, every question is included."
+                }
+            ]
+        },
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Period",
+        "default": "last_30_days",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "last_30_days"
+            },
+            {
+                "label": "Last 60 days",
+                "value": "last_60_days"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "last_90_days"
+            },
+            {
+                "label": "This year",
+                "value": "this_year"
+            },
+            {
+                "label": "Last year",
+                "value": "last_year"
+            }
+        ],
+        "help": "AI visibility report period, anchored to the latest completed check. Ignored when **From date** or **To date** is set. If left empty, `last_30_days` is used."
+    },
+    {
+        "name": "since",
+        "type": "date",
+        "time": false,
+        "label": "From date",
+        "help": "First check date to include. Together with **To date** it replaces **Period**. For example, `2026-09-01`."
+    },
+    {
+        "name": "until",
+        "type": "date",
+        "time": false,
+        "label": "To date",
+        "help": "Last check date to include. For example, `2026-09-30`."
+    },
+    {
+        "name": "platform",
+        "type": "select",
+        "label": "AI platform",
+        "options": [
+            {
+                "label": "ChatGPT",
+                "value": "chatgpt"
+            },
+            {
+                "label": "Perplexity",
+                "value": "perplexity"
+            },
+            {
+                "label": "Google AI Overviews",
+                "value": "ai_overviews"
+            },
+            {
+                "label": "Gemini",
+                "value": "gemini"
+            },
+            {
+                "label": "Claude",
+                "value": "claude"
+            },
+            {
+                "label": "Grok",
+                "value": "grok"
+            }
+        ],
+        "help": "Restricts the answers to one AI platform. If left empty, every platform is included."
+    },
+    {
+        "name": "prominence_max",
+        "type": "select",
+        "label": "Maximum prominence",
+        "options": [
+            {
+                "label": "0: brand not named",
+                "value": "0"
+            },
+            {
+                "label": "1: named in passing at most",
+                "value": "1"
+            },
+            {
+                "label": "2: one of the options at most",
+                "value": "2"
+            },
+            {
+                "label": "3: top recommendation (every answer)",
+                "value": "3"
+            }
+        ],
+        "help": "Keeps answers whose brand prominence is at most this level. Choose `1` to list the gaps, the answers where the brand is missing or only named in passing. If left empty, every level is included."
+    },
+    {
+        "name": "only_flagged",
+        "type": "boolean",
+        "label": "Only flagged answers",
+        "required": true,
+        "default": false,
+        "help": "Keeps only answers judged negative about the brand, naming a drawback, or off topic."
+    },
+    {
+        "name": "include_answer_text",
+        "type": "boolean",
+        "label": "Include answer text",
+        "required": true,
+        "default": false,
+        "nested": [
+            {
+                "name": "max_answer_chars",
+                "type": "uinteger",
+                "label": "Characters per answer",
+                "validate": {
+                    "min": 200,
+                    "max": 20000
+                },
+                "help": "Characters of answer text per row, `200` to `20000`. If left empty, `1200` characters are returned."
+            }
+        ],
+        "help": "Adds the stored answer text to each row. The API then serves 20 rows per request, so large limits take more requests."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "help": "Maximum number of answers to return and work with during one execution cycle. For information about setting limits, see our [Help Center](https://help.make.com/types-of-modules#b3ZEQ).",
+        "default": 10
+    }
+]

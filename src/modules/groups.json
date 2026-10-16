@@ -1,0 +1,32 @@
+[
+    {
+        "label": "Projects",
+        "modules": [
+            "listProjects",
+            "getProjectSummary",
+            "getActionPlan"
+        ]
+    },
+    {
+        "label": "AI visibility",
+        "modules": [
+            "listAnswers",
+            "listCompetitors",
+            "getCompetitor",
+            "listCitations"
+        ]
+    },
+    {
+        "label": "Search and traffic",
+        "modules": [
+            "getSearchPerformance",
+            "getAiTraffic"
+        ]
+    },
+    {
+        "label": "Other",
+        "modules": [
+            "makeApiCall"
+        ]
+    }
+]

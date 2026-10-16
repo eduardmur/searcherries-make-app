@@ -1,0 +1,176 @@
+{
+    "project_id": 123,
+    "generated_at": "2026-10-16T09:30:12.000Z",
+    "period": {
+        "key": "last_30_days",
+        "requested": "last_30_days",
+        "start": "2026-09-16",
+        "end": "2026-10-15",
+        "days": 30,
+        "anchored_to_latest_check": "2026-10-15",
+        "available_periods": [
+            "last_30_days",
+            "last_60_days",
+            "last_90_days",
+            "this_year"
+        ]
+    },
+    "included": [
+        "profile",
+        "questions",
+        "ai_visibility",
+        "answer_insights",
+        "competitors",
+        "citations",
+        "search",
+        "ai_traffic",
+        "connections",
+        "recommendations"
+    ],
+    "read_only": true,
+    "report_url": "https://app.searcherries.com/projects/123",
+    "profile": {
+        "brand_name": "Acme Analytics",
+        "brand_website": "https://acme-analytics.example",
+        "domain": "acme-analytics.example",
+        "description": "Product analytics for SaaS teams.",
+        "country": "us",
+        "country_name": "United States",
+        "language": "en",
+        "language_name": "English",
+        "status": "ready",
+        "ai_platforms": [
+            "chatgpt",
+            "perplexity",
+            "ai_overviews"
+        ],
+        "last_checked_at": "2026-10-15T04:12:33.000Z",
+        "next_check_date": "2026-10-16",
+        "business_profile": {
+            "category": "Product analytics software",
+            "audience": "SaaS product teams"
+        }
+    },
+    "questions": {
+        "active_total": 6,
+        "primary": {
+            "id": 456,
+            "question": "Which product analytics platform should a SaaS startup use?",
+            "cadence": "daily",
+            "last_checked_at": "2026-10-15T04:12:33.000Z",
+            "next_check_date": "2026-10-16"
+        },
+        "additional": [
+            {
+                "id": 457,
+                "question": "Best alternatives to Mixpanel for startups?",
+                "cadence": "weekly",
+                "last_checked_at": "2026-10-13T04:10:02.000Z",
+                "next_check_date": "2026-10-20"
+            }
+        ],
+        "additional_not_shown": 0
+    },
+    "ai_visibility": {
+        "available": true,
+        "visibility_score": 42.5,
+        "mentions_percentage": 38.2,
+        "total_mentions": 55,
+        "total_checks": 144,
+        "mentions_by_platform": {
+            "chatgpt": 24,
+            "perplexity": 19,
+            "ai_overviews": 12
+        },
+        "total_citations": 31,
+        "average_position": 2.4,
+        "previous_period": {
+            "visibility_score": 37.1,
+            "mentions_percentage": 33.0
+        },
+        "share_of_voice": {
+            "own_brand": 18.4
+        }
+    },
+    "answer_insights": {
+        "status": "ready",
+        "answers": 144,
+        "analyzed": 140,
+        "usable": 131,
+        "named_share": 0.41,
+        "top_pick_share": 0.12,
+        "negative": 2,
+        "drawback": 5,
+        "off_topic": 9
+    },
+    "competitors": {
+        "ranked_by": "visibility_percentage",
+        "own_brand": {
+            "competitor_name": "Acme Analytics",
+            "visibility_percentage": 38.2
+        },
+        "tracked_competitors": 14,
+        "top": [
+            {
+                "rank": 1,
+                "competitor_name": "Mixpanel",
+                "visibility_percentage": 71.5
+            }
+        ]
+    },
+    "citations": {
+        "top_domains": [
+            {
+                "website_domain": "g2.com",
+                "citation_count": 27,
+                "citation_percentage": 14.2,
+                "is_own_site": false
+            }
+        ],
+        "own_site_in_top": true
+    },
+    "search": {
+        "google": {
+            "status": "current",
+            "total_clicks": 4120,
+            "total_impressions": 188400
+        },
+        "bing": {
+            "status": "missing"
+        }
+    },
+    "ai_traffic": {
+        "status": "current",
+        "sessions": 212,
+        "share_of_all_sessions": 0.031
+    },
+    "connections": {
+        "ga4": {
+            "connected": true,
+            "periods_available": [
+                "30d",
+                "90d",
+                "365d"
+            ],
+            "latest_fetched_at": "2026-10-16T01:20:11.000Z",
+            "is_stale": false
+        },
+        "google_search_console": {
+            "connected": true
+        },
+        "bing_webmaster_tools": {
+            "connected": false,
+            "needs_reauth": false
+        },
+        "ai_checks": {
+            "last_checked_at": "2026-10-15T04:12:33.000Z",
+            "next_check_date": "2026-10-16"
+        }
+    },
+    "recommendations": {
+        "latest": {
+            "generated_at": "2026-10-12T05:02:44.000Z",
+            "summary": "Publish a comparison page against Mixpanel and Amplitude."
+        }
+    }
+}

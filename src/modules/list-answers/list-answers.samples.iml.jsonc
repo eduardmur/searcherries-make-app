@@ -1,0 +1,33 @@
+{
+    "id": 98231,
+    "check_date": "2026-10-15",
+    "platform": "chatgpt",
+    "prompt_id": 456,
+    "question": "Which product analytics platform should a SaaS startup use?",
+    "topic": "Choosing a product analytics tool",
+    "is_primary_question": true,
+    "brand_mentioned": true,
+    "cited_own_site": false,
+    "citation_count": 2,
+    "citation_urls": [
+        "https://www.g2.com/categories/product-analytics",
+        "https://acme-analytics.example/compare/mixpanel"
+    ],
+    "search_queries": [
+        "best product analytics platform saas startup 2026"
+    ],
+    "insight": {
+        "prominence_level": 2,
+        "prominence": "one of the options",
+        "prominence_confidence": 0.84,
+        "on_topic": 0.97,
+        "names_brands": 0.99,
+        "brand_sentiment": "positive",
+        "brand_drawback": 0.08,
+        "attention": null,
+        "evidence_quote": "Acme Analytics is a strong option for early-stage teams that want event tracking without a data team."
+    },
+    "response_text": "For a SaaS startup, the usual shortlist is Mixpanel, Amplitude and Acme Analytics...",
+    "response_truncated": true,
+    "response_chars": 4210
+}

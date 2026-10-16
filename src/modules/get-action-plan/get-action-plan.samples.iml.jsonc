@@ -1,0 +1,84 @@
+{
+    "status": "ready",
+    "audience": "business",
+    "read_only": true,
+    "ranking_basis": "Actions are ordered by the size of the signal behind them for the chosen audience.",
+    "actions": [
+        {
+            "id": "visibility-gaps",
+            "priority": 1,
+            "title": "Close the visibility gap on the primary question",
+            "suggested_owner": "marketing",
+            "next_step": "Publish a comparison page that answers the primary question and names the brand first.",
+            "evidence": {
+                "source": "ai_answers",
+                "period": "2026-09-16 to 2026-10-15",
+                "answers_without_brand": 61,
+                "answers_total": 144
+            },
+            "success_measure": "Named share on the primary question above 60% within two months.",
+            "report_url": "https://app.searcherries.com/projects/123/report/answers",
+            "next_request": {
+                "method": "GET",
+                "url": "https://app.searcherries.com/api/v1/projects/123/answers?prominence_max=1&period=last_30_days"
+            }
+        }
+    ],
+    "data_notes": [
+        {
+            "source": "bing_webmaster_tools",
+            "status": "not_connected",
+            "message": "Bing Webmaster Tools is not connected, so Bing queries were not considered.",
+            "report_url": "https://app.searcherries.com/projects/123/report/seo"
+        }
+    ],
+    "snapshot": {
+        "project_id": 123,
+        "generated_at": "2026-10-16T09:30:12.000Z",
+        "period": {
+            "key": "last_30_days",
+            "requested": "last_30_days",
+            "start": "2026-09-16",
+            "end": "2026-10-15",
+            "days": 30,
+            "anchored_to_latest_check": "2026-10-15",
+            "available_periods": [
+                "last_30_days",
+                "last_60_days"
+            ]
+        },
+        "included": [
+            "profile",
+            "ai_visibility",
+            "connections"
+        ],
+        "read_only": true,
+        "report_url": "https://app.searcherries.com/projects/123",
+        "profile": {
+            "brand_name": "Acme Analytics",
+            "brand_website": "https://acme-analytics.example",
+            "status": "ready"
+        },
+        "ai_visibility": {
+            "available": true,
+            "visibility_score": 42.5,
+            "mentions_percentage": 38.2
+        },
+        "connections": {
+            "ga4": {
+                "connected": true
+            },
+            "google_search_console": {
+                "connected": true
+            },
+            "bing_webmaster_tools": {
+                "connected": false,
+                "needs_reauth": false
+            }
+        }
+    },
+    "next_step": "Start with the first action; call the request in next_request for the rows behind it.",
+    "interpretation": [
+        "The plan is a suggestion built from stored data and does not estimate impact, effort or revenue."
+    ]
+}

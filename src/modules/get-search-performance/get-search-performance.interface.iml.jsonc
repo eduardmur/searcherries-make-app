@@ -1,0 +1,331 @@
+[
+    {
+        "name": "project",
+        "type": "collection",
+        "label": "Project",
+        "spec": [
+            {
+                "name": "id",
+                "type": "integer",
+                "label": "ID"
+            },
+            {
+                "name": "brand_name",
+                "type": "text",
+                "label": "Brand name"
+            },
+            {
+                "name": "brand_website",
+                "type": "text",
+                "label": "Brand website"
+            },
+            {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+            }
+        ]
+    },
+    {
+        "name": "source",
+        "type": "text",
+        "label": "Source"
+    },
+    {
+        "name": "period",
+        "type": "collection",
+        "label": "Period",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "start",
+                "type": "text",
+                "label": "Start"
+            },
+            {
+                "name": "end",
+                "type": "text",
+                "label": "End"
+            }
+        ]
+    },
+    {
+        "name": "dataset",
+        "type": "text",
+        "label": "Dataset"
+    },
+    {
+        "name": "available_periods",
+        "type": "array",
+        "label": "Available periods",
+        "spec": {
+            "type": "text",
+            "label": "Available period"
+        }
+    },
+    {
+        "name": "available",
+        "type": "boolean",
+        "label": "Available"
+    },
+    {
+        "name": "reason",
+        "type": "text",
+        "label": "Reason"
+    },
+    {
+        "name": "fetched_at",
+        "type": "date",
+        "label": "Fetched at"
+    },
+    {
+        "name": "is_stale",
+        "type": "boolean",
+        "label": "Is stale"
+    },
+    {
+        "name": "data_scope",
+        "type": "collection",
+        "label": "Data scope",
+        "spec": []
+    },
+    {
+        "name": "data_limits",
+        "type": "array",
+        "label": "Data limits",
+        "spec": {
+            "type": "text",
+            "label": "Data limit"
+        }
+    },
+    {
+        "name": "total_clicks",
+        "type": "integer",
+        "label": "Total clicks"
+    },
+    {
+        "name": "total_impressions",
+        "type": "integer",
+        "label": "Total impressions"
+    },
+    {
+        "name": "top_queries",
+        "type": "array",
+        "label": "Top queries",
+        "spec": [
+            {
+                "name": "query",
+                "type": "text",
+                "label": "Query"
+            },
+            {
+                "name": "page",
+                "type": "text",
+                "label": "Page"
+            },
+            {
+                "name": "country",
+                "type": "text",
+                "label": "Country"
+            },
+            {
+                "name": "clicks",
+                "type": "integer",
+                "label": "Clicks"
+            },
+            {
+                "name": "impressions",
+                "type": "integer",
+                "label": "Impressions"
+            },
+            {
+                "name": "ctr",
+                "type": "number",
+                "label": "CTR"
+            },
+            {
+                "name": "position",
+                "type": "number",
+                "label": "Position"
+            }
+        ]
+    },
+    {
+        "name": "top_pages",
+        "type": "array",
+        "label": "Top pages",
+        "spec": [
+            {
+                "name": "query",
+                "type": "text",
+                "label": "Query"
+            },
+            {
+                "name": "page",
+                "type": "text",
+                "label": "Page"
+            },
+            {
+                "name": "country",
+                "type": "text",
+                "label": "Country"
+            },
+            {
+                "name": "clicks",
+                "type": "integer",
+                "label": "Clicks"
+            },
+            {
+                "name": "impressions",
+                "type": "integer",
+                "label": "Impressions"
+            },
+            {
+                "name": "ctr",
+                "type": "number",
+                "label": "CTR"
+            },
+            {
+                "name": "position",
+                "type": "number",
+                "label": "Position"
+            }
+        ]
+    },
+    {
+        "name": "top_countries",
+        "type": "array",
+        "label": "Top countries",
+        "spec": [
+            {
+                "name": "query",
+                "type": "text",
+                "label": "Query"
+            },
+            {
+                "name": "page",
+                "type": "text",
+                "label": "Page"
+            },
+            {
+                "name": "country",
+                "type": "text",
+                "label": "Country"
+            },
+            {
+                "name": "clicks",
+                "type": "integer",
+                "label": "Clicks"
+            },
+            {
+                "name": "impressions",
+                "type": "integer",
+                "label": "Impressions"
+            },
+            {
+                "name": "ctr",
+                "type": "number",
+                "label": "CTR"
+            },
+            {
+                "name": "position",
+                "type": "number",
+                "label": "Position"
+            }
+        ]
+    },
+    {
+        "name": "ai_question_queries_total",
+        "type": "integer",
+        "label": "AI question queries total"
+    },
+    {
+        "name": "opportunity_counts",
+        "type": "collection",
+        "label": "Opportunity counts",
+        "spec": []
+    },
+    {
+        "name": "trend_counts",
+        "type": "collection",
+        "label": "Trend counts",
+        "spec": []
+    },
+    {
+        "name": "datasets",
+        "type": "array",
+        "label": "Datasets",
+        "spec": {
+            "type": "text",
+            "label": "Dataset"
+        }
+    },
+    {
+        "name": "dimension",
+        "type": "text",
+        "label": "Dimension"
+    },
+    {
+        "name": "sort",
+        "type": "text",
+        "label": "Sort"
+    },
+    {
+        "name": "rows",
+        "type": "array",
+        "label": "Rows"
+    },
+    {
+        "name": "pagination",
+        "type": "collection",
+        "label": "Pagination",
+        "spec": [
+            {
+                "name": "offset",
+                "type": "integer",
+                "label": "Offset"
+            },
+            {
+                "name": "limit",
+                "type": "integer",
+                "label": "Limit"
+            },
+            {
+                "name": "returned",
+                "type": "integer",
+                "label": "Returned"
+            },
+            {
+                "name": "total",
+                "type": "integer",
+                "label": "Total"
+            },
+            {
+                "name": "has_more",
+                "type": "boolean",
+                "label": "Has more"
+            }
+        ]
+    },
+    {
+        "name": "opportunities",
+        "type": "collection",
+        "label": "Opportunities",
+        "spec": []
+    },
+    {
+        "name": "trends",
+        "type": "collection",
+        "label": "Trends",
+        "spec": []
+    },
+    {
+        "name": "granularity",
+        "type": "text",
+        "label": "Granularity"
+    }
+]

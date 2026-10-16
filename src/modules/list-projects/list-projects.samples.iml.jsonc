@@ -1,0 +1,49 @@
+{
+    "id": 123,
+    "brand_name": "Acme Analytics",
+    "brand_website": "https://acme-analytics.example",
+    "status": "ready",
+    "country": "us",
+    "language": "en",
+    "selected_ai_models": [
+        "chatgpt",
+        "perplexity",
+        "ai_overviews"
+    ],
+    "last_checked_at": "2026-10-15T04:12:33.000Z",
+    "connections": {
+        "ga4": true,
+        "google_search_console": true,
+        "bing_webmaster_tools": false
+    },
+    "connected_data": {
+        "ga4": {
+            "latest_fetched_at": "2026-10-16T01:20:11.000Z",
+            "is_stale": false
+        },
+        "google_search_console": {
+            "latest_fetched_at": "2026-10-16T01:21:05.000Z",
+            "is_stale": false
+        },
+        "bing_webmaster_tools": {
+            "latest_fetched_at": null,
+            "is_stale": null,
+            "needs_reauth": false
+        }
+    },
+    "data_availability": {
+        "metrics": true,
+        "metrics_fetched_at": "2026-10-15T04:15:02.000Z",
+        "latest_check_date": "2026-10-15",
+        "topics": 5,
+        "prompts": 6,
+        "mentions": 348,
+        "answer_insights": 340,
+        "competitor_snapshots": 42,
+        "top_site_snapshots": 60,
+        "trust_mentions": 0,
+        "recommendations": 3,
+        "ga4_snapshots": 3,
+        "search_performance_snapshots": 3
+    }
+}

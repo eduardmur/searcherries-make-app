@@ -1,0 +1,80 @@
+{
+    "project": {
+        "id": 123,
+        "brand_name": "Acme Analytics",
+        "brand_website": "https://acme-analytics.example",
+        "status": "ready"
+    },
+    "source": "google",
+    "period": {
+        "key": "30d",
+        "start": "2026-09-15",
+        "end": "2026-10-14"
+    },
+    "dataset": "summary",
+    "available_periods": [
+        "30d",
+        "90d",
+        "365d"
+    ],
+    "available": true,
+    "fetched_at": "2026-10-16T01:21:05.000Z",
+    "is_stale": false,
+    "data_scope": {
+        "site": "sc-domain:acme-analytics.example"
+    },
+    "data_limits": [
+        "Top lists are the stored top sample of up to 50 rows per dimension."
+    ],
+    "total_clicks": 4120,
+    "total_impressions": 188400,
+    "top_queries": [
+        {
+            "query": "acme analytics pricing",
+            "clicks": 310,
+            "impressions": 2210,
+            "ctr": 0.14,
+            "position": 1.3
+        }
+    ],
+    "top_pages": [
+        {
+            "page": "https://acme-analytics.example/pricing",
+            "clicks": 540,
+            "impressions": 6900,
+            "ctr": 0.078,
+            "position": 2.1
+        }
+    ],
+    "top_countries": [
+        {
+            "country": "usa",
+            "clicks": 2410,
+            "impressions": 99100,
+            "ctr": 0.024,
+            "position": 8.4
+        }
+    ],
+    "ai_question_queries_total": 212,
+    "opportunity_counts": {
+        "high_impression_low_ctr_queries": 18,
+        "high_impression_low_ctr_pages": 6,
+        "long_tail_queries": 140
+    },
+    "trend_counts": {
+        "growing_queries": 12,
+        "falling_queries": 9
+    },
+    "datasets": [
+        "summary",
+        "top_queries",
+        "top_pages",
+        "top_countries",
+        "queries_by_country",
+        "opportunities",
+        "trends",
+        "ai_question_queries",
+        "daily",
+        "history"
+    ]
+}

@@ -1,0 +1,45 @@
+[
+    {
+        "name": "url",
+        "type": "text",
+        "label": "URL",
+        "required": true,
+        "help": "Enter the part of the URL that comes after `https://app.searcherries.com/api`. For example, `/v1/projects`. The API is read-only, so every call is a `GET` request. For the available endpoints, see the [Searcherries API endpoint reference](https://searcherries.com/docs/api/endpoints)."
+    },
+    {
+        "name": "headers",
+        "type": "array",
+        "label": "Headers",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+            }
+        ],
+        "help": "You don't have to add authorization headers; we already did that for you."
+    },
+    {
+        "name": "qs",
+        "type": "array",
+        "label": "Query string",
+        "spec": [
+            {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+            },
+            {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+            }
+        ],
+        "help": "Query parameters of the endpoint. For example, key `period` with value `last_90_days`."
+    }
+]

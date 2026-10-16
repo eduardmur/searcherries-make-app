@@ -1,0 +1,1630 @@
+openapi: 3.1.0
+info:
+  title: Searcherries API
+  version: 1.0.0
+  summary: Read-only access to the AI visibility, search and traffic data Searcherries stores for your projects.
+  description: |
+    The Searcherries REST API returns the data Searcherries has already collected for the projects of your
+    account: AI visibility metrics, stored AI answers with their judgments, competitors, cited URLs and
+    domains, Google Search Console and Bing Webmaster Tools snapshots, GA4 AI-traffic snapshots and a
+    prioritized action plan. It serves the same datasets as the Searcherries MCP server.
+
+    The API is read-only. It never changes a project and never calls Google, Bing or an AI platform on your
+    behalf; every response is built from stored rows and caches. Data is refreshed by Searcherries on its own
+    schedule and each response says when its data was fetched.
+
+    **Authentication.** Send a personal access token created on the MCP page of Searcherries
+    (`https://app.searcherries.com/mcp`, tab *Other clients*) as a bearer token. Tokens carry the `api:read`
+    and `mcp:use` scopes; tokens created before the API existed carry `mcp:use` only and are accepted too.
+
+    **Plan.** A paid plan (Starter or Pro, an active trial counts) is required. Free accounts receive
+    `403 paid_plan_required`.
+
+    **Rate limit.** 60 requests per minute per account on Starter, 120 on Pro. Responses carry
+    `X-RateLimit-Limit` and `X-RateLimit-Remaining`; a `429` carries `Retry-After`.
+
+    **Errors.** Every error is a JSON object `{"error": {"code", "message", "status"}}`. Validation errors add
+    `errors` (field name to messages), throttling adds `retry_after`, plan gating adds `plans_url`.
+
+    **Periods.** AI visibility data (answers, competitors, citations, metrics) uses report periods anchored to
+    the latest completed check: `last_30_days` (default), `last_60_days`, `last_90_days`, `this_year`,
+    `last_year`. Connected sources (Search Console, Bing, GA4) are stored as rolling windows ending on the
+    collection day: `30d`, `90d`, `365d`.
+
+    **Pagination.** Paginated datasets return `pagination` with `offset`, `limit`, `returned`, `total` and
+    `has_more`. Request the next page with a larger `offset` while `has_more` is true.
+  contact:
+    name: Searcherries support
+    url: https://searcherries.com/docs/account/support
+  termsOfService: https://searcherries.com/terms
+  license:
+    name: Proprietary
+    url: https://searcherries.com/terms
+externalDocs:
+  description: API documentation
+  url: https://searcherries.com/docs/api/overview
+servers:
+  - url: https://app.searcherries.com/api/v1
+    description: Production
+security:
+  - bearerAuth: []
+tags:
+  - name: Projects
+    description: The projects of the authenticated account and their compact summary.
+  - name: AI answers
+    description: Stored AI answers joined with their judgments.
+  - name: Search performance
+    description: Google Search Console and Bing Webmaster Tools snapshots.
+  - name: Competitors
+    description: Brands the AI platforms name for the tracked questions.
+  - name: Citations
+    description: URLs and domains the AI platforms cite.
+  - name: AI traffic
+    description: GA4 traffic from AI assistants and AI Overviews.
+  - name: Action plan
+    description: Prioritized next steps built from the stored data.
+paths:
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [Projects]
+      summary: List projects
+      description: |
+        Lists the projects of the authenticated account with status, tracked AI platforms, connected sources
+        and their freshness, counts of stored data and the latest check date. The `id` of each project is the
+        `project` path parameter of every other endpoint.
+      responses:
+        '200':
+          description: The projects of the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectList'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}:
+    get:
+      operationId: getProjectSummary
+      tags: [Projects]
+      summary: Get the project summary
+      description: |
+        One compact snapshot of a project (about 16 KB): profile and business profile, tracked customer
+        questions, the AI visibility KPIs of the period, the answer-insight summary, the top competitors and
+        most-cited domains, 30-day Search Console, Bing and GA4 totals with top lists, connection health and the
+        latest recommendation summary. Totals and top lists only; the other endpoints return rows and filters.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - $ref: '#/components/parameters/reportPeriod'
+        - name: include
+          in: query
+          description: |
+            Blocks to include, as a comma-separated list or repeated `include[]` parameters. Omit for the whole
+            summary.
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [profile, questions, ai_visibility, answer_insights, competitors, citations, search, ai_traffic, connections, recommendations]
+          example: profile,ai_visibility,connections
+      responses:
+        '200':
+          description: The project summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSummary'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/answers:
+    get:
+      operationId: listAnswers
+      tags: [AI answers]
+      summary: List stored AI answers
+      description: |
+        Stored AI answers to the tracked customer questions, one row per check and platform, joined with their
+        answer insights: `prominence_level` (0 not named, 1 named in passing, 2 one of the options, 3 top
+        recommendation), `on_topic`, `names_brands`, `brand_sentiment`, `brand_drawback`, `evidence_quote`,
+        cited URLs and the web searches the platform ran. `brand_mentioned` is `null` for answers the nightly
+        insight backfill has not judged yet. Answer text is excluded unless `include_answer_text` is true, which
+        caps the page at 20 rows.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - $ref: '#/components/parameters/reportPeriod'
+        - name: since
+          in: query
+          description: First check date to include (`YYYY-MM-DD`). Overrides `period` together with `until`.
+          schema:
+            type: string
+            format: date
+        - name: until
+          in: query
+          description: Last check date to include (`YYYY-MM-DD`).
+          schema:
+            type: string
+            format: date
+        - $ref: '#/components/parameters/promptId'
+        - $ref: '#/components/parameters/platform'
+        - name: prominence_max
+          in: query
+          description: Keep answers whose brand prominence is at most this level. `1` lists the gaps.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 3
+        - name: only_flagged
+          in: query
+          description: Only answers judged negative, with a drawback, or off topic.
+          schema:
+            $ref: '#/components/schemas/QueryBoolean'
+        - name: include_answer_text
+          in: query
+          description: Include the stored answer text. Caps the page at 20 rows.
+          schema:
+            $ref: '#/components/schemas/QueryBoolean'
+        - name: max_answer_chars
+          in: query
+          description: Characters of answer text per row when text is included. Default 1200.
+          schema:
+            type: integer
+            minimum: 200
+            maximum: 20000
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: One page of answers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnswersResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/search-performance:
+    get:
+      operationId: getSearchPerformance
+      tags: [Search performance]
+      summary: Get Search Console or Bing data
+      description: |
+        Google Search Console or Bing Webmaster Tools data stored for one window: summary totals, top
+        queries, top pages, top countries, queries by country, opportunities (high impressions with low CTR,
+        long-tail queries), growing and falling trends, question-shaped Google queries, the daily series and a
+        monthly history. Lists are the stored top sample (up to 50 rows per dimension, up to 1000 question-shaped
+        queries), not an exhaustive export. When the source or window has no stored data, `available` is false
+        and `reason` explains why.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - name: source
+          in: query
+          description: '`google` (Search Console, default) or `bing` (Webmaster Tools).'
+          schema:
+            type: string
+            enum: [google, bing]
+            default: google
+        - $ref: '#/components/parameters/connectedPeriod'
+        - name: dataset
+          in: query
+          description: |
+            `summary` (default: totals, top-10 lists and counts), `top_queries`, `top_pages`, `top_countries`,
+            `queries_by_country`, `opportunities`, `trends`, `ai_question_queries` (Google only), `daily`,
+            `history` (monthly clicks and impressions from the daily series).
+          schema:
+            type: string
+            enum: [summary, top_queries, top_pages, top_countries, queries_by_country, opportunities, trends, ai_question_queries, daily, history]
+            default: summary
+        - name: query_contains
+          in: query
+          description: Case-insensitive substring filter on query text (`top_queries`, `ai_question_queries`).
+          schema:
+            type: string
+            maxLength: 120
+        - name: page_contains
+          in: query
+          description: Case-insensitive substring filter on page URLs (`top_pages`).
+          schema:
+            type: string
+            maxLength: 300
+        - name: country
+          in: query
+          description: Three-letter country code as stored by the provider, for example `usa` or `deu` (`top_countries`, `queries_by_country`).
+          schema:
+            type: string
+            maxLength: 3
+        - name: min_impressions
+          in: query
+          description: Keep rows with at least this many impressions.
+          schema:
+            type: integer
+            minimum: 0
+        - name: min_clicks
+          in: query
+          description: Keep rows with at least this many clicks.
+          schema:
+            type: integer
+            minimum: 0
+        - name: min_position
+          in: query
+          description: Keep rows with an average position greater than or equal to this value (larger means further down the results).
+          schema:
+            type: number
+            minimum: 0
+        - name: max_position
+          in: query
+          description: Keep rows with an average position less than or equal to this value. Must not be lower than `min_position`.
+          schema:
+            type: number
+            minimum: 0
+        - name: sort
+          in: query
+          description: Sort key for list datasets. `clicks` (default), `impressions` and `ctr` sort descending, `position` ascending.
+          schema:
+            type: string
+            enum: [clicks, impressions, ctr, position]
+            default: clicks
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: 'The requested dataset, or `available: false` with a reason.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchPerformanceResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/competitors:
+    get:
+      operationId: getCompetitors
+      tags: [Competitors]
+      summary: Get competitors
+      description: |
+        Brands the AI platforms name for the tracked questions. `dataset=ranking` (default) returns one row per
+        brand for the period, the own brand included, ranked by visibility with mentions, citations, average
+        position, per-platform numbers and a few deduplicated highlights of what platforms say about each brand.
+        `dataset=detail` returns one brand (name fragment in `competitor`) with all its highlights.
+        `dataset=history` returns the stored month-by-month snapshots.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - $ref: '#/components/parameters/reportPeriod'
+        - name: dataset
+          in: query
+          schema:
+            type: string
+            enum: [ranking, detail, history]
+            default: ranking
+        - name: competitor
+          in: query
+          description: Brand name or a fragment of it. Required for `dataset=detail`.
+          schema:
+            type: string
+            maxLength: 120
+        - name: include_highlights
+          in: query
+          description: Include per-platform highlight sentences in the ranking. Default true.
+          schema:
+            $ref: '#/components/schemas/QueryBoolean'
+        - name: highlights_per_platform
+          in: query
+          description: Highlights per platform in the ranking. Default 3.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 5
+        - name: limit
+          in: query
+          description: Rows per page for `ranking` (default 15, maximum 50) or months for `history` (default 12).
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: The ranking, one competitor, or the monthly history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitorsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/citations:
+    get:
+      operationId: getCitations
+      tags: [Citations]
+      summary: Get cited URLs or domains
+      description: |
+        URLs and domains the AI platforms cite as sources when answering the tracked questions in the period.
+        `group_by=url` (default) returns each cited URL with its citation count, platforms, the questions it
+        appeared for and whether it belongs to the project website. `group_by=domain` returns the most-cited
+        domains. The `platform`, `prompt_id`, `url_contains` and `own_site_only` filters apply to the URL grouping
+        (`prompt_id` also to domains).
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - $ref: '#/components/parameters/reportPeriod'
+        - name: group_by
+          in: query
+          schema:
+            type: string
+            enum: [url, domain]
+            default: url
+        - $ref: '#/components/parameters/platform'
+        - $ref: '#/components/parameters/promptId'
+        - name: url_contains
+          in: query
+          description: Case-insensitive substring filter on the URL.
+          schema:
+            type: string
+            maxLength: 300
+        - name: own_site_only
+          in: query
+          description: Only URLs on the project website.
+          schema:
+            $ref: '#/components/schemas/QueryBoolean'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: Cited URLs or domains.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/ai-traffic:
+    get:
+      operationId: getAiTraffic
+      tags: [AI traffic]
+      summary: Get GA4 AI traffic
+      description: |
+        GA4 traffic stored for one window: all-site totals for context, AI-referral traffic (sessions, users,
+        engaged sessions, key events, conversions, share of all sessions) per AI source, the landing pages AI
+        visitors arrive on, the daily series and a monthly history. When the window has no stored data,
+        `available` is false and `reason` explains why.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - $ref: '#/components/parameters/connectedPeriod'
+        - name: dataset
+          in: query
+          description: '`summary` (default), `sources` (per AI source with top landing pages and referrers), `landing_pages` (flat, filterable list), `daily`, `history` (monthly AI sessions per platform).'
+          schema:
+            type: string
+            enum: [summary, sources, landing_pages, daily, history]
+            default: summary
+        - name: source
+          in: query
+          description: Restrict `sources` or `landing_pages` to one AI source.
+          schema:
+            type: string
+            enum: [chatgpt, gemini, perplexity, claude, copilot, meta_ai, other_ai_assistants, ai_overviews]
+        - name: path_contains
+          in: query
+          description: Case-insensitive substring filter on landing page paths.
+          schema:
+            type: string
+            maxLength: 300
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: 'The requested dataset, or `available: false` with a reason.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiTrafficResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /projects/{project}/action-plan:
+    get:
+      operationId: getActionPlan
+      tags: [Action plan]
+      summary: Get the action plan
+      description: |
+        Prioritized next steps for one project: up to ten actions for a business, marketing or SEO audience,
+        each with dated evidence, a suggested owner, a success measure, a link to the matching Searcherries
+        report and `next_request`, the API request that returns the supporting rows. Actions come from four stored
+        signals: answers that are negative about the brand or name a drawback, answers where the brand is not
+        named, Search Console and Bing queries with many impressions and few clicks, and the landing pages of AI
+        visitors. `data_notes` explain missing or stale sources. The plan is a suggestion built from stored data
+        and does not estimate impact, effort or revenue.
+      parameters:
+        - $ref: '#/components/parameters/project'
+        - name: audience
+          in: query
+          description: '`business` (default) for traffic and business priorities, `marketing` for brand answers and content, `seo` for search pages and queries.'
+          schema:
+            type: string
+            enum: [business, marketing, seo]
+            default: business
+        - $ref: '#/components/parameters/reportPeriod'
+        - name: limit
+          in: query
+          description: Maximum number of actions. Fewer are returned when the evidence is thin.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+            default: 5
+      responses:
+        '200':
+          description: The action plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionPlan'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        A Searcherries personal access token (created on `https://app.searcherries.com/mcp`, tab *Other
+        clients*) or an OAuth access token issued by Searcherries. The token must carry the `api:read` or the
+        `mcp:use` scope.
+  parameters:
+    project:
+      name: project
+      in: path
+      required: true
+      description: Numeric project id from `GET /projects`. Ids of projects outside the account answer 404.
+      schema:
+        type: integer
+        minimum: 1
+    reportPeriod:
+      name: period
+      in: query
+      description: |
+        AI visibility report period, anchored to the latest completed check. Default `last_30_days`. A period
+        without enough history falls back to the nearest available one; the response says which one was used.
+      schema:
+        type: string
+        enum: [last_30_days, last_60_days, last_90_days, this_year, last_year]
+        default: last_30_days
+    connectedPeriod:
+      name: period
+      in: query
+      description: Rolling window of the stored snapshot, ending on the collection day. Default `30d`.
+      schema:
+        type: string
+        enum: [30d, 90d, 365d]
+        default: 30d
+    promptId:
+      name: prompt_id
+      in: query
+      description: Restrict to one customer question (its `id` in the project summary). A question of another project is a validation error.
+      schema:
+        type: integer
+        minimum: 1
+    platform:
+      name: platform
+      in: query
+      description: Restrict to one AI platform.
+      schema:
+        type: string
+        enum: [chatgpt, perplexity, ai_overviews, gemini, claude, grok]
+    limit:
+      name: limit
+      in: query
+      description: Rows per page, 1 to 100. Default 25.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: Rows to skip. Use with `pagination.has_more`.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 100000
+        default: 0
+  responses:
+    Unauthenticated:
+      description: No token, or an expired or revoked token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: unauthenticated
+              message: A valid bearer token is required.
+              status: 401
+    Forbidden:
+      description: |
+        The token lacks both accepted scopes (`insufficient_scope`), or the account has no paid plan
+        (`paid_plan_required`, with `plans_url`).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: paid_plan_required
+              message: Please choose a paid plan to continue.
+              status: 403
+              plans_url: https://app.searcherries.com/plans
+    NotFound:
+      description: The project does not exist or belongs to another account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: not_found
+              message: Project not found.
+              status: 404
+    ValidationFailed:
+      description: A query parameter is invalid. `errors` maps each parameter to its messages.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: validation_failed
+              message: The request parameters are invalid.
+              status: 422
+              errors:
+                period:
+                  - The selected period is invalid.
+    RateLimited:
+      description: The per-minute budget of the account is used up.
+      headers:
+        Retry-After:
+          description: Seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: rate_limited
+              message: Too many requests. Retry after the number of seconds in retry_after.
+              status: 429
+              retry_after: 42
+  schemas:
+    QueryBoolean:
+      description: Boolean query value. `1`, `0`, `true` and `false` are accepted.
+      type: string
+      enum: ['0', '1', 'true', 'false']
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, status]
+          properties:
+            code:
+              type: string
+              enum: [unauthenticated, insufficient_scope, paid_plan_required, forbidden, not_found, validation_failed, rate_limited, server_error]
+              description: Machine-readable error code. Other HTTP errors use `http_<status>`.
+            message:
+              type: string
+            status:
+              type: integer
+              description: The HTTP status code, repeated in the body.
+            errors:
+              type: object
+              description: Validation messages per query parameter (422 only).
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            retry_after:
+              type: integer
+              description: Seconds until the next request is accepted (429 only).
+            plans_url:
+              type: string
+              format: uri
+              description: Where to choose a plan (403 `paid_plan_required` only).
+            required_scopes:
+              type: array
+              description: Scopes of which the token needs at least one (403 `insufficient_scope` only).
+              items:
+                type: string
+    Pagination:
+      type: object
+      required: [offset, limit, returned, total, has_more]
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        returned:
+          type: integer
+          description: Rows in this page.
+        total:
+          type: integer
+          description: Rows matching the filters.
+        has_more:
+          type: boolean
+    ReportPeriod:
+      type: object
+      description: The AI visibility period the response covers.
+      properties:
+        key:
+          type: string
+          description: The period used, which may differ from `requested` when history is short.
+        requested:
+          type: string
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        days:
+          type: integer
+        anchored_to_latest_check:
+          type: [string, 'null']
+          format: date
+        available_periods:
+          type: array
+          items:
+            type: string
+    ConnectedPeriod:
+      type: object
+      description: The rolling window of a connected-source snapshot.
+      properties:
+        key:
+          type: string
+          enum: [30d, 90d, 365d]
+        start:
+          type: [string, 'null']
+          format: date
+        end:
+          type: [string, 'null']
+          format: date
+    ProjectStub:
+      type: object
+      description: The project the rows belong to.
+      required: [id, brand_name]
+      properties:
+        id:
+          type: integer
+        brand_name:
+          type: string
+        brand_website:
+          type: [string, 'null']
+        status:
+          type: [string, 'null']
+    Freshness:
+      type: object
+      properties:
+        latest_fetched_at:
+          type: [string, 'null']
+          format: date-time
+        is_stale:
+          type: [boolean, 'null']
+    ProjectListItem:
+      type: object
+      required: [id, brand_name, status, selected_ai_models, connections, connected_data, data_availability]
+      properties:
+        id:
+          type: integer
+        brand_name:
+          type: string
+        brand_website:
+          type: [string, 'null']
+        status:
+          type: [string, 'null']
+          description: '`pending`, `processing`, `ready`, `paused`, `generating_prompts` or another lifecycle status.'
+        country:
+          type: [string, 'null']
+          description: Lowercase ISO country code; `null` means global.
+        language:
+          type: [string, 'null']
+        selected_ai_models:
+          type: array
+          items:
+            type: string
+        last_checked_at:
+          type: [string, 'null']
+          format: date-time
+        connections:
+          type: object
+          description: Whether each source is connected.
+          properties:
+            ga4:
+              type: boolean
+            google_search_console:
+              type: boolean
+            bing_webmaster_tools:
+              type: boolean
+        connected_data:
+          type: object
+          description: Freshness of the newest stored snapshot per source.
+          properties:
+            ga4:
+              $ref: '#/components/schemas/Freshness'
+            google_search_console:
+              $ref: '#/components/schemas/Freshness'
+            bing_webmaster_tools:
+              allOf:
+                - $ref: '#/components/schemas/Freshness'
+                - type: object
+                  properties:
+                    needs_reauth:
+                      type: boolean
+        data_availability:
+          type: object
+          description: Counts of stored data.
+          properties:
+            metrics:
+              type: boolean
+            metrics_fetched_at:
+              type: [string, 'null']
+              format: date-time
+            latest_check_date:
+              type: [string, 'null']
+              format: date
+            topics:
+              type: integer
+            prompts:
+              type: integer
+            mentions:
+              type: integer
+            answer_insights:
+              type: integer
+            competitor_snapshots:
+              type: integer
+            top_site_snapshots:
+              type: integer
+            trust_mentions:
+              type: integer
+            recommendations:
+              type: integer
+            ga4_snapshots:
+              type: integer
+            search_performance_snapshots:
+              type: integer
+    ProjectList:
+      type: object
+      required: [total, projects]
+      properties:
+        total:
+          type: integer
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectListItem'
+    ProjectSummary:
+      type: object
+      description: |
+        The compact project snapshot. Every block is present unless `include` left it out. Blocks that depend on
+        a connection or on completed checks report their own `available` or `status`.
+      required: [project_id, generated_at, period, included, read_only, report_url]
+      properties:
+        project_id:
+          type: integer
+        generated_at:
+          type: string
+          format: date-time
+        period:
+          $ref: '#/components/schemas/ReportPeriod'
+        included:
+          type: array
+          description: The blocks in this response.
+          items:
+            type: string
+        read_only:
+          type: boolean
+          const: true
+        report_url:
+          type: string
+          format: uri
+          description: The project report in Searcherries.
+        profile:
+          type: object
+          description: Brand, market, platforms, schedule, detected niche, business profile and onboarding context.
+          additionalProperties: true
+          properties:
+            brand_name:
+              type: string
+            brand_website:
+              type: [string, 'null']
+            domain:
+              type: [string, 'null']
+            description:
+              type: [string, 'null']
+            country:
+              type: [string, 'null']
+            country_name:
+              type: string
+            language:
+              type: [string, 'null']
+            language_name:
+              type: [string, 'null']
+            status:
+              type: [string, 'null']
+            ai_platforms:
+              type: array
+              items:
+                type: string
+            last_checked_at:
+              type: [string, 'null']
+              format: date-time
+            next_check_date:
+              type: [string, 'null']
+              format: date
+            business_profile:
+              type: [object, 'null']
+              additionalProperties: true
+        questions:
+          type: object
+          description: The primary question (checked daily) and up to 15 additional questions (checked weekly).
+          additionalProperties: true
+          properties:
+            active_total:
+              type: integer
+            primary:
+              oneOf:
+                - $ref: '#/components/schemas/Question'
+                - type: 'null'
+            additional:
+              type: array
+              items:
+                $ref: '#/components/schemas/Question'
+            additional_not_shown:
+              type: integer
+        ai_visibility:
+          type: object
+          description: 'Visibility KPIs of the period, or `available: false` with a reason.'
+          additionalProperties: true
+          properties:
+            available:
+              type: boolean
+            visibility_score:
+              type: [number, 'null']
+            mentions_percentage:
+              type: [number, 'null']
+            total_mentions:
+              type: [integer, 'null']
+            total_checks:
+              type: [integer, 'null']
+            mentions_by_platform:
+              type: object
+              additionalProperties: true
+            total_citations:
+              type: [integer, 'null']
+            average_position:
+              type: [number, 'null']
+            previous_period:
+              type: object
+              additionalProperties: true
+            share_of_voice:
+              additionalProperties: true
+        answer_insights:
+          type: object
+          description: How often and how prominently the brand is named across judged answers; `status` is `ready` when there are judged answers.
+          additionalProperties: true
+          properties:
+            status:
+              type: string
+            answers:
+              type: integer
+            analyzed:
+              type: integer
+            usable:
+              type: integer
+            named_share:
+              type: [number, 'null']
+            top_pick_share:
+              type: [number, 'null']
+            negative:
+              type: integer
+            drawback:
+              type: integer
+            off_topic:
+              type: integer
+        competitors:
+          type: object
+          additionalProperties: true
+          properties:
+            ranked_by:
+              type: string
+            own_brand:
+              type: [object, 'null']
+              additionalProperties: true
+            tracked_competitors:
+              type: integer
+            top:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+        citations:
+          type: object
+          additionalProperties: true
+          properties:
+            top_domains:
+              type: array
+              items:
+                $ref: '#/components/schemas/CitationDomainRow'
+            own_site_in_top:
+              type: boolean
+        search:
+          type: object
+          description: 30-day Google Search Console and Bing totals with top-5 lists; each source carries a `status` of `current`, `stale` or `missing`.
+          additionalProperties: true
+        ai_traffic:
+          type: object
+          description: 30-day GA4 AI traffic with a `status` of `current`, `stale` or `missing`.
+          additionalProperties: true
+        connections:
+          $ref: '#/components/schemas/Connections'
+        recommendations:
+          type: object
+          additionalProperties: true
+          properties:
+            latest:
+              type: [object, 'null']
+              additionalProperties: true
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        cadence:
+          type: string
+        last_checked_at:
+          type: [string, 'null']
+          format: date-time
+        next_check_date:
+          type: [string, 'null']
+          format: date
+    Connections:
+      type: object
+      description: Connection health of GA4, Google Search Console and Bing, plus the AI check schedule.
+      additionalProperties: true
+      properties:
+        ga4:
+          type: object
+          additionalProperties: true
+          properties:
+            connected:
+              type: boolean
+            periods_available:
+              type: array
+              items:
+                type: string
+            latest_fetched_at:
+              type: [string, 'null']
+              format: date-time
+            is_stale:
+              type: [boolean, 'null']
+        google_search_console:
+          type: object
+          additionalProperties: true
+          properties:
+            connected:
+              type: boolean
+        bing_webmaster_tools:
+          type: object
+          additionalProperties: true
+          properties:
+            connected:
+              type: boolean
+            needs_reauth:
+              type: boolean
+        ai_checks:
+          type: object
+          additionalProperties: true
+    AnswerInsight:
+      type: object
+      description: The judgment stored for an answer.
+      properties:
+        prominence_level:
+          type: integer
+          minimum: 0
+          maximum: 3
+        prominence:
+          type: string
+          description: Label of `prominence_level`.
+        prominence_confidence:
+          type: [number, 'null']
+        on_topic:
+          type: [number, 'null']
+          description: Probability (0 to 1) that the answer addresses the question.
+        names_brands:
+          type: [number, 'null']
+        brand_sentiment:
+          type: [string, 'null']
+          description: '`positive`, `neutral`, `negative`, or `not_mentioned` when the brand is not named.'
+        brand_drawback:
+          type: [number, 'null']
+        attention:
+          type: [string, 'null']
+          description: Why the answer needs attention (`negative`, `drawback`, `off_topic`), or `null`.
+        evidence_quote:
+          type: [string, 'null']
+    AnswerRow:
+      type: object
+      required: [id, check_date, platform, prompt_id, brand_mentioned, citation_count, citation_urls]
+      properties:
+        id:
+          type: integer
+        check_date:
+          type: [string, 'null']
+          format: date
+        platform:
+          type: string
+        prompt_id:
+          type: integer
+        question:
+          type: [string, 'null']
+        topic:
+          type: [string, 'null']
+        is_primary_question:
+          type: boolean
+        brand_mentioned:
+          type: [boolean, 'null']
+          description: '`null` until the nightly insight backfill judged the answer.'
+        cited_own_site:
+          type: boolean
+        citation_count:
+          type: integer
+        citation_urls:
+          type: array
+          description: Up to 10 cited URLs.
+          items:
+            type: string
+        search_queries:
+          type: array
+          description: Up to 10 web searches the platform ran.
+          items:
+            type: string
+        insight:
+          oneOf:
+            - $ref: '#/components/schemas/AnswerInsight'
+            - type: 'null'
+        response_text:
+          type: string
+          description: Only with `include_answer_text`.
+        response_truncated:
+          type: boolean
+        response_chars:
+          type: integer
+    AnswersResponse:
+      type: object
+      required: [project, period, rows, pagination]
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectStub'
+        period:
+          type: object
+          properties:
+            start:
+              type: string
+              format: date
+            end:
+              type: string
+              format: date
+            source:
+              type: string
+              description: The period key, or `since_until` when dates were given.
+        answer_text_included:
+          type: boolean
+        max_answer_chars:
+          type: [integer, 'null']
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerRow'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SearchRow:
+      type: object
+      description: One query, page or country row of a stored top list.
+      additionalProperties: true
+      properties:
+        query:
+          type: string
+        page:
+          type: string
+        country:
+          type: string
+        clicks:
+          type: integer
+        impressions:
+          type: integer
+        ctr:
+          type: [number, 'null']
+          description: Ratio from 0 to 1.
+        position:
+          type: [number, 'null']
+    SearchPerformanceResponse:
+      type: object
+      required: [project, source, period, dataset, available, available_periods]
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectStub'
+        source:
+          type: string
+          enum: [google, bing]
+        period:
+          $ref: '#/components/schemas/ConnectedPeriod'
+        dataset:
+          type: string
+        available_periods:
+          type: array
+          items:
+            type: string
+        available:
+          type: boolean
+        reason:
+          type: string
+          description: Why no data is available (only when `available` is false).
+        fetched_at:
+          type: [string, 'null']
+          format: date-time
+        is_stale:
+          type: boolean
+        data_scope:
+          type: [object, 'null']
+          additionalProperties: true
+        data_limits:
+          type: array
+          items:
+            type: string
+        total_clicks:
+          type: [integer, 'null']
+          description: '`summary` only.'
+        total_impressions:
+          type: [integer, 'null']
+        top_queries:
+          type: array
+          description: '`summary` only (top 10).'
+          items:
+            $ref: '#/components/schemas/SearchRow'
+        top_pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchRow'
+        top_countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchRow'
+        ai_question_queries_total:
+          type: integer
+        opportunity_counts:
+          type: object
+          additionalProperties:
+            type: integer
+        trend_counts:
+          type: object
+          additionalProperties:
+            type: integer
+        datasets:
+          type: array
+          items:
+            type: string
+        dimension:
+          type: string
+          description: List datasets.
+        sort:
+          type: string
+        rows:
+          type: array
+          description: Rows of list datasets, daily rows (`date`, `clicks`, `impressions`) or monthly rows (`month`, `clicks`, `impressions`, `days`).
+          items:
+            type: object
+            additionalProperties: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        opportunities:
+          type: object
+          description: '`opportunities` only: `high_impression_low_ctr_queries`, `high_impression_low_ctr_pages`, `long_tail_queries`.'
+          additionalProperties: true
+        trends:
+          type: object
+          description: '`trends` only: `comparison` plus growing and falling queries, pages and countries.'
+          additionalProperties: true
+        granularity:
+          type: string
+          description: '`history` only: `calendar_month`.'
+    CompetitorRow:
+      type: object
+      required: [rank, competitor_name, is_own_brand, visibility_percentage]
+      properties:
+        rank:
+          type: integer
+        competitor_name:
+          type: [string, 'null']
+        competitor_website:
+          type: [string, 'null']
+        is_own_brand:
+          type: boolean
+        visibility_percentage:
+          type: number
+        average_position:
+          type: number
+        mention_count:
+          type: integer
+        citation_count:
+          type: integer
+        platforms_mentioning:
+          type: integer
+        platform_mentions:
+          type: object
+          additionalProperties:
+            type: integer
+        platform_average_positions:
+          type: object
+          additionalProperties:
+            type: number
+        platform_citations:
+          type: object
+          additionalProperties:
+            type: integer
+        platform_highlights:
+          type: object
+          description: What each platform says about the brand (ranking with highlights, and detail).
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        platform_positions:
+          type: object
+          description: Detail only.
+          additionalProperties: true
+        name_variants:
+          type: array
+          description: Detail only.
+          items:
+            type: string
+    CompetitorsResponse:
+      type: object
+      required: [project, dataset, period]
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectStub'
+        dataset:
+          type: string
+          enum: [ranking, detail, history]
+        period:
+          $ref: '#/components/schemas/ReportPeriod'
+        ranked_by:
+          type: string
+          description: Ranking only.
+        platforms:
+          type: array
+          items:
+            type: string
+        rows:
+          type: array
+          description: Ranking rows, or monthly history rows (`period_start`, `period_end`, `own_brand`, `tracked_competitors`, `top_competitors`).
+          items:
+            type: object
+            additionalProperties: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        found:
+          type: boolean
+          description: Detail only.
+        competitor:
+          description: Detail only. The matched brand, or the requested name when `found` is false.
+          oneOf:
+            - $ref: '#/components/schemas/CompetitorRow'
+            - type: string
+        reason:
+          type: string
+        granularity:
+          type: string
+          description: History only.
+        months_returned:
+          type: integer
+    CitationUrlRow:
+      type: object
+      required: [url, mention_count, platforms, prompt_ids]
+      properties:
+        url:
+          type: string
+        domain:
+          type: [string, 'null']
+        is_own_site:
+          type: boolean
+        mention_count:
+          type: integer
+        platforms:
+          type: array
+          items:
+            type: string
+        prompt_ids:
+          type: array
+          items:
+            type: integer
+    CitationDomainRow:
+      type: object
+      required: [website_domain, citation_count]
+      properties:
+        website_domain:
+          type: string
+        citation_count:
+          type: integer
+        citation_percentage:
+          type: number
+        is_own_site:
+          type: boolean
+    CitationsResponse:
+      type: object
+      required: [project, period, group_by, rows, pagination]
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectStub'
+        period:
+          $ref: '#/components/schemas/ReportPeriod'
+        group_by:
+          type: string
+          enum: [url, domain]
+        filters:
+          type: object
+          description: The filters applied (URL grouping).
+          additionalProperties: true
+        definition:
+          type: string
+          description: Domain grouping.
+        rows:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/CitationUrlRow'
+              - $ref: '#/components/schemas/CitationDomainRow'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    AiTrafficSource:
+      type: object
+      properties:
+        source:
+          type: string
+        sessions:
+          type: integer
+        users:
+          type: integer
+        pageviews:
+          type: integer
+        engaged_sessions:
+          type: [integer, 'null']
+        conversions:
+          type: [integer, 'null']
+        detection_method:
+          type: [string, 'null']
+        landing_pages:
+          type: array
+          description: '`sources` dataset only (top 5).'
+          items:
+            type: object
+            additionalProperties: true
+        referrers:
+          type: array
+          description: '`sources` dataset only (top 5).'
+          items:
+            type: object
+            additionalProperties: true
+    LandingPageRow:
+      type: object
+      properties:
+        source:
+          type: string
+        path:
+          type: string
+        sessions:
+          type: integer
+        users:
+          type: integer
+        pageviews:
+          type: integer
+        engaged_sessions:
+          type: [integer, 'null']
+        conversions:
+          type: [integer, 'null']
+    AiTrafficResponse:
+      type: object
+      required: [project, period, dataset, available, available_periods]
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectStub'
+        period:
+          $ref: '#/components/schemas/ConnectedPeriod'
+        dataset:
+          type: string
+        available_periods:
+          type: array
+          items:
+            type: string
+        available:
+          type: boolean
+        reason:
+          type: string
+          description: Why no data is available (only when `available` is false).
+        fetched_at:
+          type: [string, 'null']
+          format: date-time
+        is_stale:
+          type: boolean
+        measurement_scope:
+          type: [string, 'null']
+        interpretation:
+          type: string
+        all_site:
+          type: object
+          description: '`summary` only: all-site totals with top countries and sources for context.'
+          additionalProperties: true
+        ai_traffic:
+          type: object
+          description: '`summary` only: sessions, users, pageviews, engaged sessions, key events, conversions, share of all-site sessions and measurement sources.'
+          additionalProperties: true
+        sources:
+          type: array
+          description: '`summary` only: one row per AI source without landing pages.'
+          items:
+            $ref: '#/components/schemas/AiTrafficSource'
+        rows:
+          type: array
+          description: '`sources` rows (AiTrafficSource with landing pages and referrers), `landing_pages` rows, `daily` rows (`date`, `sessions`, `platforms`) or `history` rows (`month`, `sessions`, `days`, `platforms`).'
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/AiTrafficSource'
+              - $ref: '#/components/schemas/LandingPageRow'
+              - type: object
+                additionalProperties: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        granularity:
+          type: string
+          description: '`history` only: `calendar_month`.'
+    Action:
+      type: object
+      required: [id, priority, title, suggested_owner, next_step, evidence, success_measure, report_url, next_request]
+      properties:
+        id:
+          type: string
+          description: '`brand-accuracy`, `visibility-gaps`, `search-google`, `search-bing` or `ai-traffic`.'
+        priority:
+          type: integer
+          description: 1 is first.
+        title:
+          type: string
+        suggested_owner:
+          type: string
+          enum: [business, marketing, seo]
+        next_step:
+          type: string
+        evidence:
+          type: object
+          description: Dated figures the action rests on (`source`, `period` and signal-specific values).
+          additionalProperties: true
+        success_measure:
+          type: string
+        report_url:
+          type: string
+          format: uri
+          description: The Searcherries report section that shows the evidence.
+        next_request:
+          type: object
+          description: The API request that returns the supporting rows.
+          required: [method, url]
+          properties:
+            method:
+              type: string
+              const: GET
+            url:
+              type: string
+              format: uri
+    ActionPlan:
+      type: object
+      required: [status, audience, read_only, actions, data_notes, snapshot]
+      properties:
+        status:
+          type: string
+          enum: [ready, needs_data, no_priority_signals]
+        audience:
+          type: string
+          enum: [business, marketing, seo]
+        read_only:
+          type: boolean
+          const: true
+        ranking_basis:
+          type: string
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        data_notes:
+          type: array
+          description: Sources that are missing, stale, not connected or not analyzed.
+          items:
+            type: object
+            required: [source, status, message]
+            properties:
+              source:
+                type: string
+              status:
+                type: string
+              message:
+                type: string
+              report_url:
+                type: string
+                format: uri
+        snapshot:
+          $ref: '#/components/schemas/ProjectSummary'
+        next_step:
+          type: string
+        interpretation:
+          type: array
+          description: Notes on how to read the numbers.
+          items:
+            type: string

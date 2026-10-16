@@ -1,0 +1,137 @@
+[
+    {
+        "name": "id",
+        "type": "integer",
+        "label": "ID"
+    },
+    {
+        "name": "check_date",
+        "type": "text",
+        "label": "Check date"
+    },
+    {
+        "name": "platform",
+        "type": "text",
+        "label": "Platform"
+    },
+    {
+        "name": "prompt_id",
+        "type": "integer",
+        "label": "Prompt ID"
+    },
+    {
+        "name": "question",
+        "type": "text",
+        "label": "Question"
+    },
+    {
+        "name": "topic",
+        "type": "text",
+        "label": "Topic"
+    },
+    {
+        "name": "is_primary_question",
+        "type": "boolean",
+        "label": "Is primary question"
+    },
+    {
+        "name": "brand_mentioned",
+        "type": "boolean",
+        "label": "Brand mentioned"
+    },
+    {
+        "name": "cited_own_site",
+        "type": "boolean",
+        "label": "Cited own site"
+    },
+    {
+        "name": "citation_count",
+        "type": "integer",
+        "label": "Citation count"
+    },
+    {
+        "name": "citation_urls",
+        "type": "array",
+        "label": "Citation URLs",
+        "spec": {
+            "type": "text",
+            "label": "Citation URL"
+        }
+    },
+    {
+        "name": "search_queries",
+        "type": "array",
+        "label": "Search queries",
+        "spec": {
+            "type": "text",
+            "label": "Search query"
+        }
+    },
+    {
+        "name": "insight",
+        "type": "collection",
+        "label": "Insight",
+        "spec": [
+            {
+                "name": "prominence_level",
+                "type": "integer",
+                "label": "Prominence level"
+            },
+            {
+                "name": "prominence",
+                "type": "text",
+                "label": "Prominence"
+            },
+            {
+                "name": "prominence_confidence",
+                "type": "number",
+                "label": "Prominence confidence"
+            },
+            {
+                "name": "on_topic",
+                "type": "number",
+                "label": "On topic"
+            },
+            {
+                "name": "names_brands",
+                "type": "number",
+                "label": "Names brands"
+            },
+            {
+                "name": "brand_sentiment",
+                "type": "text",
+                "label": "Brand sentiment"
+            },
+            {
+                "name": "brand_drawback",
+                "type": "number",
+                "label": "Brand drawback"
+            },
+            {
+                "name": "attention",
+                "type": "text",
+                "label": "Attention"
+            },
+            {
+                "name": "evidence_quote",
+                "type": "text",
+                "label": "Evidence quote"
+            }
+        ]
+    },
+    {
+        "name": "response_text",
+        "type": "text",
+        "label": "Response text"
+    },
+    {
+        "name": "response_truncated",
+        "type": "boolean",
+        "label": "Response truncated"
+    },
+    {
+        "name": "response_chars",
+        "type": "integer",
+        "label": "Response chars"
+    }
+]

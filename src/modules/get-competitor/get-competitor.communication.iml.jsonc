@@ -1,0 +1,18 @@
+{
+    "url": "/projects/{{parameters.project}}/competitors",
+    "method": "GET",
+    "qs": {
+        "dataset": "detail",
+        "competitor": "{{parameters.competitor}}",
+        "period": "{{ifempty(parameters.period, undefined)}}"
+    },
+    "response": {
+        // The API answers 200 with `found: false` when no tracked brand matches the name.
+        "valid": {
+            "condition": "{{body.found != false}}",
+            "message": "[404] No competitor matching '{{parameters.competitor}}' was found for the period. {{ifempty(body.reason, 'Use the List competitors module to see the brand names Searcherries tracks.')}}",
+            "type": "DataError"
+        },
+        "output": "{{body}}"
+    }
+}

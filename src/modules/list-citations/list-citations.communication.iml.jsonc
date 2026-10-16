@@ -1,0 +1,25 @@
+{
+    "url": "/projects/{{parameters.project}}/citations",
+    "method": "GET",
+    "qs": {
+        "period": "{{ifempty(parameters.period, undefined)}}",
+        "group_by": "{{ifempty(parameters.group_by, 'url')}}",
+        "platform": "{{ifempty(parameters.platform, undefined)}}",
+        "prompt_id": "{{ifempty(parameters.prompt_id, undefined)}}",
+        "url_contains": "{{ifempty(parameters.url_contains, undefined)}}",
+        "own_site_only": "{{ifempty(parameters.own_site_only, undefined)}}",
+        // Largest page the API serves.
+        "limit": 100
+    },
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.rows}}",
+        "output": "{{item}}"
+    },
+    "pagination": {
+        "qs": {
+            "offset": "{{body.pagination.offset + body.pagination.returned}}"
+        },
+        "condition": "{{body.pagination.has_more}}"
+    }
+}

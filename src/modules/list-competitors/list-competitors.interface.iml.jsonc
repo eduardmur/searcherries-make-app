@@ -1,0 +1,112 @@
+[
+    {
+        "name": "rank",
+        "type": "integer",
+        "label": "Rank"
+    },
+    {
+        "name": "competitor_name",
+        "type": "text",
+        "label": "Competitor name"
+    },
+    {
+        "name": "competitor_website",
+        "type": "text",
+        "label": "Competitor website"
+    },
+    {
+        "name": "is_own_brand",
+        "type": "boolean",
+        "label": "Is own brand"
+    },
+    {
+        "name": "visibility_percentage",
+        "type": "number",
+        "label": "Visibility percentage"
+    },
+    {
+        "name": "average_position",
+        "type": "number",
+        "label": "Average position"
+    },
+    {
+        "name": "mention_count",
+        "type": "integer",
+        "label": "Mention count"
+    },
+    {
+        "name": "citation_count",
+        "type": "integer",
+        "label": "Citation count"
+    },
+    {
+        "name": "platforms_mentioning",
+        "type": "integer",
+        "label": "Platforms mentioning"
+    },
+    {
+        "name": "platform_mentions",
+        "type": "collection",
+        "label": "Platform mentions",
+        "spec": []
+    },
+    {
+        "name": "platform_average_positions",
+        "type": "collection",
+        "label": "Platform average positions",
+        "spec": []
+    },
+    {
+        "name": "platform_citations",
+        "type": "collection",
+        "label": "Platform citations",
+        "spec": []
+    },
+    {
+        "name": "platform_highlights",
+        "type": "collection",
+        "label": "Platform highlights",
+        "spec": []
+    },
+    {
+        "name": "platform_positions",
+        "type": "collection",
+        "label": "Platform positions",
+        "spec": []
+    },
+    {
+        "name": "name_variants",
+        "type": "array",
+        "label": "Name variants",
+        "spec": {
+            "type": "text",
+            "label": "Name variant"
+        }
+    },
+    {
+        "name": "period_start",
+        "type": "text",
+        "label": "Period start"
+    },
+    {
+        "name": "period_end",
+        "type": "text",
+        "label": "Period end"
+    },
+    {
+        "name": "own_brand",
+        "type": "collection",
+        "label": "Own brand",
+        "spec": []
+    },
+    {
+        "name": "tracked_competitors",
+        "type": "integer",
+        "label": "Tracked competitors"
+    },
+    {
+        "name": "top_competitors",
+        "type": "array",
+        "label": "Top competitors"
+    }
+]

@@ -1,0 +1,4 @@
+# Make API keys written by the Make Apps Editor (never commit them)
+.secrets/
+node_modules/
+.DS_Store

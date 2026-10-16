@@ -1,0 +1,53 @@
+{
+    "project": {
+        "id": 123,
+        "brand_name": "Acme Analytics",
+        "brand_website": "https://acme-analytics.example",
+        "status": "ready"
+    },
+    "period": {
+        "key": "30d",
+        "start": "2026-09-15",
+        "end": "2026-10-14"
+    },
+    "dataset": "summary",
+    "available_periods": [
+        "30d",
+        "90d",
+        "365d"
+    ],
+    "available": true,
+    "fetched_at": "2026-10-16T01:20:11.000Z",
+    "is_stale": false,
+    "measurement_scope": "sessions whose source or referrer is an AI assistant or AI Overviews",
+    "interpretation": "AI referral traffic is a share of all sessions; engaged sessions and key events come from GA4.",
+    "all_site": {
+        "sessions": 6840,
+        "users": 5120,
+        "pageviews": 15800
+    },
+    "ai_traffic": {
+        "sessions": 212,
+        "users": 180,
+        "pageviews": 530,
+        "engaged_sessions": 141,
+        "key_events": 19,
+        "conversions": 4,
+        "share_of_all_sessions": 0.031,
+        "measurement_sources": [
+            "referrer",
+            "source/medium"
+        ]
+    },
+    "sources": [
+        {
+            "source": "chatgpt",
+            "sessions": 144,
+            "users": 121,
+            "pageviews": 360,
+            "engaged_sessions": 98,
+            "conversions": 3,
+            "detection_method": "referrer"
+        }
+    ]
+}

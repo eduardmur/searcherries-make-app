@@ -1,0 +1,13 @@
+{
+    // Options for the Project select of every module: one entry per project of the account.
+    "url": "/projects",
+    "method": "GET",
+    "response": {
+        "limit": 500,
+        "iterate": "{{body.projects}}",
+        "output": {
+            "label": "{{item.brand_name}}{{if(item.brand_website, ' (' + item.brand_website + ')', '')}}",
+            "value": "{{item.id}}"
+        }
+    }
+}

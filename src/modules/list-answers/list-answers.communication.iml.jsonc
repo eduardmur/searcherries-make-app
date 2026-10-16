@@ -1,0 +1,29 @@
+{
+    "url": "/projects/{{parameters.project}}/answers",
+    "method": "GET",
+    "qs": {
+        "period": "{{ifempty(parameters.period, undefined)}}",
+        "since": "{{if(parameters.since, formatDate(parameters.since, 'YYYY-MM-DD'), undefined)}}",
+        "until": "{{if(parameters.until, formatDate(parameters.until, 'YYYY-MM-DD'), undefined)}}",
+        "prompt_id": "{{ifempty(parameters.prompt_id, undefined)}}",
+        "platform": "{{ifempty(parameters.platform, undefined)}}",
+        "prominence_max": "{{ifempty(parameters.prominence_max, undefined)}}",
+        "only_flagged": "{{ifempty(parameters.only_flagged, undefined)}}",
+        "include_answer_text": "{{ifempty(parameters.include_answer_text, undefined)}}",
+        "max_answer_chars": "{{if(parameters.include_answer_text, ifempty(parameters.max_answer_chars, undefined), undefined)}}",
+        // Largest page the API serves; it caps the page at 20 rows when answer text is included,
+        // which is why the next offset is computed from the rows actually returned.
+        "limit": 100
+    },
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.rows}}",
+        "output": "{{item}}"
+    },
+    "pagination": {
+        "qs": {
+            "offset": "{{body.pagination.offset + body.pagination.returned}}"
+        },
+        "condition": "{{body.pagination.has_more}}"
+    }
+}
