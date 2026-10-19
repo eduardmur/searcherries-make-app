@@ -26,8 +26,10 @@ Modules
 | List competitors | Brands the AI platforms name, ranked for the period, or the month-by-month history. |
 | Get a competitor | One brand with every highlight and per-platform numbers. |
 | Search citations | Cited URLs or domains, with platforms and the questions they appeared for. |
-| Get search performance | Google Search Console or Bing data for one window: summary, top lists, opportunities, trends, daily series or monthly history. |
-| Get AI traffic | GA4 traffic from AI assistants for one window: summary, sources, landing pages, daily series or monthly history. |
+| Get search performance | Google Search Console or Bing Webmaster Tools data for one window: totals with the top-10 lists, opportunities or trends. |
+| List search performance rows | One row per query, page or country, per country with its top queries, per question-shaped query, per day or per month. |
+| Get AI traffic | GA4 traffic from AI assistants for one window: all-site and AI-traffic totals with one row per AI source. |
+| List AI traffic rows | One row per landing page, per AI source (with top landing pages and referrers), per day or per month. |
 | Make an API call | Any `GET` endpoint of the API. |
 
 Limits

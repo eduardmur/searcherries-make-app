@@ -7,7 +7,7 @@
             {
                 "name": "id",
                 "type": "integer",
-                "label": "ID"
+                "label": "Project ID"
             },
             {
                 "name": "brand_name",
@@ -265,53 +265,6 @@
         }
     },
     {
-        "name": "dimension",
-        "type": "text",
-        "label": "Dimension"
-    },
-    {
-        "name": "sort",
-        "type": "text",
-        "label": "Sort"
-    },
-    {
-        "name": "rows",
-        "type": "array",
-        "label": "Rows"
-    },
-    {
-        "name": "pagination",
-        "type": "collection",
-        "label": "Pagination",
-        "spec": [
-            {
-                "name": "offset",
-                "type": "integer",
-                "label": "Offset"
-            },
-            {
-                "name": "limit",
-                "type": "integer",
-                "label": "Limit"
-            },
-            {
-                "name": "returned",
-                "type": "integer",
-                "label": "Returned"
-            },
-            {
-                "name": "total",
-                "type": "integer",
-                "label": "Total"
-            },
-            {
-                "name": "has_more",
-                "type": "boolean",
-                "label": "Has more"
-            }
-        ]
-    },
-    {
         "name": "opportunities",
         "type": "collection",
         "label": "Opportunities",
@@ -322,10 +275,5 @@
         "type": "collection",
         "label": "Trends",
         "spec": []
-    },
-    {
-        "name": "granularity",
-        "type": "text",
-        "label": "Granularity"
     }
 ]

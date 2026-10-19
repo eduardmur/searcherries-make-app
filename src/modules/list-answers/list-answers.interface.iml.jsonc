@@ -2,7 +2,7 @@
     {
         "name": "id",
         "type": "integer",
-        "label": "ID"
+        "label": "Answer ID"
     },
     {
         "name": "check_date",
@@ -132,6 +132,6 @@
     {
         "name": "response_chars",
         "type": "integer",
-        "label": "Response chars"
+        "label": "Response characters"
     }
 ]

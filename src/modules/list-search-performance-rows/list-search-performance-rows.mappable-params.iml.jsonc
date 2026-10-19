@@ -1,0 +1,174 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project",
+        "required": true,
+        "options": "rpc://rpcProjects",
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
+    },
+    {
+        "name": "source",
+        "type": "select",
+        "label": "Source",
+        "default": "google",
+        "options": [
+            {
+                "label": "Google Search Console",
+                "value": "google"
+            },
+            {
+                "label": "Bing Webmaster Tools",
+                "value": "bing"
+            }
+        ],
+        "help": "Connected search source to read. If left empty, `google` is used."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Window",
+        "default": "30d",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "30d"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "90d"
+            },
+            {
+                "label": "Last 365 days",
+                "value": "365d"
+            }
+        ],
+        "help": "Rolling window of the stored snapshot, ending on the collection day. If left empty, `30d` is used."
+    },
+    {
+        "name": "dataset",
+        "type": "select",
+        "label": "Dataset",
+        "default": "top_queries",
+        "options": [
+            {
+                "label": "Top queries",
+                "value": "top_queries"
+            },
+            {
+                "label": "Top pages",
+                "value": "top_pages"
+            },
+            {
+                "label": "Top countries",
+                "value": "top_countries"
+            },
+            {
+                "label": "Queries by country",
+                "value": "queries_by_country"
+            },
+            {
+                "label": "Question-shaped queries (Google only)",
+                "value": "ai_question_queries"
+            },
+            {
+                "label": "Daily series",
+                "value": "daily"
+            },
+            {
+                "label": "Monthly history",
+                "value": "history"
+            }
+        ],
+        "help": "Which stored list to return, one bundle per row. Lists are the stored top sample (up to 50 rows per dimension, up to 1000 question-shaped queries), not an exhaustive export; `daily` has one row per day and `history` one row per month. When the source or window has no stored data, the module returns no bundles and **Get search performance** says why. If left empty, `top_queries` is used."
+    },
+    {
+        "name": "query_contains",
+        "type": "text",
+        "label": "Query contains",
+        "validate": {
+            "max": 120
+        },
+        "help": "Case-insensitive text the query must contain (`top_queries` and `ai_question_queries` datasets). For example, `pricing`."
+    },
+    {
+        "name": "page_contains",
+        "type": "text",
+        "label": "Page contains",
+        "validate": {
+            "max": 300
+        },
+        "help": "Case-insensitive text the page URL must contain (`top_pages` dataset). For example, `/blog/`."
+    },
+    {
+        "name": "country",
+        "type": "text",
+        "label": "Country",
+        "validate": {
+            "max": 3
+        },
+        "help": "Three-letter country code as stored by the provider (`top_countries` and `queries_by_country` datasets). For example, `usa` or `deu`."
+    },
+    {
+        "name": "min_impressions",
+        "type": "uinteger",
+        "label": "Minimum impressions",
+        "help": "Keeps rows with at least this many impressions (query, page and country lists)."
+    },
+    {
+        "name": "min_clicks",
+        "type": "uinteger",
+        "label": "Minimum clicks",
+        "help": "Keeps rows with at least this many clicks (query, page and country lists)."
+    },
+    {
+        "name": "min_position",
+        "type": "number",
+        "label": "Minimum position",
+        "validate": {
+            "min": 0
+        },
+        "help": "Keeps rows whose average position is at least this value; a larger position is further down the results (query, page and country lists). For example, `10` for rows outside the first page."
+    },
+    {
+        "name": "max_position",
+        "type": "number",
+        "label": "Maximum position",
+        "validate": {
+            "min": 0
+        },
+        "help": "Keeps rows whose average position is at most this value (query, page and country lists). Must not be lower than **Minimum position**."
+    },
+    {
+        "name": "sort",
+        "type": "select",
+        "label": "Sort by",
+        "default": "clicks",
+        "options": [
+            {
+                "label": "Clicks, descending",
+                "value": "clicks"
+            },
+            {
+                "label": "Impressions, descending",
+                "value": "impressions"
+            },
+            {
+                "label": "CTR, descending",
+                "value": "ctr"
+            },
+            {
+                "label": "Position, ascending",
+                "value": "position"
+            }
+        ],
+        "help": "Order of the rows of the query, page and country lists. If left empty, rows are sorted by clicks."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "help": "Maximum number of rows to return and work with during one execution cycle. For information about setting limits, see our [Help Center](https://help.make.com/types-of-modules#b3ZEQ).",
+        "default": 10
+    }
+]

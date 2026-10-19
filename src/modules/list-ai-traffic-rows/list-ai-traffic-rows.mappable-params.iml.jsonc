@@ -1,0 +1,112 @@
+[
+    {
+        "name": "project",
+        "type": "select",
+        "label": "Project",
+        "required": true,
+        "options": "rpc://rpcProjects",
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
+    },
+    {
+        "name": "period",
+        "type": "select",
+        "label": "Window",
+        "default": "30d",
+        "options": [
+            {
+                "label": "Last 30 days",
+                "value": "30d"
+            },
+            {
+                "label": "Last 90 days",
+                "value": "90d"
+            },
+            {
+                "label": "Last 365 days",
+                "value": "365d"
+            }
+        ],
+        "help": "Rolling window of the stored GA4 snapshot, ending on the collection day. If left empty, `30d` is used."
+    },
+    {
+        "name": "dataset",
+        "type": "select",
+        "label": "Dataset",
+        "default": "landing_pages",
+        "options": [
+            {
+                "label": "Landing pages: flat, filterable list",
+                "value": "landing_pages"
+            },
+            {
+                "label": "Sources: per AI source with top landing pages and referrers",
+                "value": "sources"
+            },
+            {
+                "label": "Daily series",
+                "value": "daily"
+            },
+            {
+                "label": "Monthly history",
+                "value": "history"
+            }
+        ],
+        "help": "Which stored list to return, one bundle per row: landing pages of AI visitors, AI sources with their top landing pages and referrers, the daily series or the monthly history. When GA4 is not connected or the window has no stored data, the module returns no bundles and **Get AI traffic** says why. If left empty, `landing_pages` is used."
+    },
+    {
+        "name": "source",
+        "type": "select",
+        "label": "AI source",
+        "options": [
+            {
+                "label": "ChatGPT",
+                "value": "chatgpt"
+            },
+            {
+                "label": "Gemini",
+                "value": "gemini"
+            },
+            {
+                "label": "Perplexity",
+                "value": "perplexity"
+            },
+            {
+                "label": "Claude",
+                "value": "claude"
+            },
+            {
+                "label": "Copilot",
+                "value": "copilot"
+            },
+            {
+                "label": "Meta AI",
+                "value": "meta_ai"
+            },
+            {
+                "label": "Other AI assistants",
+                "value": "other_ai_assistants"
+            },
+            {
+                "label": "Google AI Overviews",
+                "value": "ai_overviews"
+            }
+        ],
+        "help": "Restricts the `landing_pages` and `sources` datasets to one AI source. If left empty, every source is included."
+    },
+    {
+        "name": "path_contains",
+        "type": "text",
+        "label": "Path contains",
+        "validate": {
+            "max": 300
+        },
+        "help": "Case-insensitive text the landing page path must contain (`landing_pages` dataset). For example, `/pricing`."
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "help": "Maximum number of rows to return and work with during one execution cycle. For information about setting limits, see our [Help Center](https://help.make.com/types-of-modules#b3ZEQ).",
+        "default": 10
+    }
+]

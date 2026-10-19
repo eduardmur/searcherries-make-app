@@ -2,11 +2,10 @@
     {
         "name": "project",
         "type": "select",
-        "label": "Project ID",
+        "label": "Project",
         "required": true,
-        "mode": "edit",
         "options": "rpc://rpcProjects",
-        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
     },
     {
         "name": "source",
@@ -57,141 +56,24 @@
                 "value": "summary"
             },
             {
-                "label": "Top queries",
-                "value": "top_queries"
-            },
-            {
-                "label": "Top pages",
-                "value": "top_pages"
-            },
-            {
-                "label": "Top countries",
-                "value": "top_countries"
-            },
-            {
-                "label": "Queries by country",
-                "value": "queries_by_country"
-            },
-            {
                 "label": "Opportunities: high impressions, low CTR, long tail",
                 "value": "opportunities"
             },
             {
                 "label": "Trends: growing and falling",
                 "value": "trends"
-            },
-            {
-                "label": "Question-shaped queries (Google only)",
-                "value": "ai_question_queries"
-            },
-            {
-                "label": "Daily series",
-                "value": "daily"
-            },
-            {
-                "label": "Monthly history",
-                "value": "history"
             }
         ],
-        "help": "Which stored data to return. Lists are the stored top sample (up to 50 rows per dimension, up to 1000 question-shaped queries), not an exhaustive export. When the source or window has no stored data, the output says `available: false` and `reason` explains why. If left empty, `summary` is used."
+        "help": "Which stored data to return. The lists of queries, pages and countries, the question-shaped queries, the daily series and the monthly history are rows: use the **List search performance rows** module for them. When the source or window has no stored data, the output says `available: false` and `reason` explains why. If left empty, `summary` is used."
     },
     {
-        "name": "query_contains",
-        "type": "text",
-        "label": "Query contains",
-        "validate": {
-            "max": 120
-        },
-        "help": "Case-insensitive text the query must contain (`top_queries` and `ai_question_queries` datasets). For example, `pricing`."
-    },
-    {
-        "name": "page_contains",
-        "type": "text",
-        "label": "Page contains",
-        "validate": {
-            "max": 300
-        },
-        "help": "Case-insensitive text the page URL must contain (`top_pages` dataset). For example, `/blog/`."
-    },
-    {
-        "name": "country",
-        "type": "text",
-        "label": "Country",
-        "validate": {
-            "max": 3
-        },
-        "help": "Three-letter country code as stored by the provider (`top_countries` and `queries_by_country` datasets). For example, `usa` or `deu`."
-    },
-    {
-        "name": "min_impressions",
+        "name": "rows_per_list",
         "type": "uinteger",
-        "label": "Minimum impressions",
-        "help": "Keeps rows with at least this many impressions (list datasets)."
-    },
-    {
-        "name": "min_clicks",
-        "type": "uinteger",
-        "label": "Minimum clicks",
-        "help": "Keeps rows with at least this many clicks (list datasets)."
-    },
-    {
-        "name": "min_position",
-        "type": "number",
-        "label": "Minimum position",
-        "validate": {
-            "min": 0
-        },
-        "help": "Keeps rows whose average position is at least this value; a larger position is further down the results (list datasets). For example, `10` for rows outside the first page."
-    },
-    {
-        "name": "max_position",
-        "type": "number",
-        "label": "Maximum position",
-        "validate": {
-            "min": 0
-        },
-        "help": "Keeps rows whose average position is at most this value (list datasets). Must not be lower than **Minimum position**."
-    },
-    {
-        "name": "sort",
-        "type": "select",
-        "label": "Sort by",
-        "default": "clicks",
-        "options": [
-            {
-                "label": "Clicks, descending",
-                "value": "clicks"
-            },
-            {
-                "label": "Impressions, descending",
-                "value": "impressions"
-            },
-            {
-                "label": "CTR, descending",
-                "value": "ctr"
-            },
-            {
-                "label": "Position, ascending",
-                "value": "position"
-            }
-        ],
-        "help": "Order of the rows of list datasets. If left empty, rows are sorted by clicks."
-    },
-    {
-        "name": "limit",
-        "type": "uinteger",
-        "label": "Rows per page",
+        "label": "Rows per list",
         "validate": {
             "min": 1,
             "max": 100
         },
-        "help": "Rows returned by list datasets (`top_queries`, `top_pages`, `top_countries`, `queries_by_country`, `ai_question_queries`, `daily`), `1` to `100`. The `pagination` field of the output says whether more rows exist; set **Offset** to fetch them. If left empty, `25` rows are returned."
-    },
-    {
-        "name": "offset",
-        "type": "uinteger",
-        "label": "Offset",
-        "advanced": true,
-        "help": "Rows to skip before the first returned row (list datasets). For example, `25` for the second page of 25 rows. If left empty, the first page is returned."
+        "help": "Maximum rows in each list of the `opportunities` and `trends` datasets, `1` to `100`. If left empty, `25` rows per list are returned."
     }
 ]

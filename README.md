@@ -4,7 +4,7 @@ Custom [Make](https://www.make.com) app for the [Searcherries REST API](https://
 
 The repository is laid out the way the [Make Apps Editor for VS Code](https://marketplace.visualstudio.com/items?itemName=Integromat.apps-sdk) stores a locally developed app (its *Local development for Apps* feature), so the app can be deployed to a Make account straight from these files and later pulled, compared and re-deployed from VS Code. Nothing here talks to Make on its own.
 
-- `src/` – the app: `makecomapp.json` (manifest), `general/base.iml.jsonc`, the connection, two RPCs, ten modules, `modules/groups.json`, `README.md` (shown on the app page in Make)
+- `src/` – the app: `makecomapp.json` (manifest), `general/base.iml.jsonc`, the connection, two RPCs, twelve modules, `modules/groups.json`, `README.md` (shown on the app page in Make)
 - `assets/logo.png` – the 512 × 512 app logo (black glyph on a transparent canvas, see below)
 - `reference/openapi-v1.yaml` – copy of the API document the interfaces are generated from
 - `scripts/` – `generate-interfaces.mjs` (module interfaces from the OpenAPI schemas) and `validate.mjs` (structure, references, conventions)
@@ -35,13 +35,15 @@ The repository is laid out the way the [Make Apps Editor for VS Code](https://ma
 | List competitors (`listCompetitors`) | search | `GET /projects/{project}/competitors` (`ranking`, `history`) |
 | Get a competitor (`getCompetitor`) | action (read) | `GET /projects/{project}/competitors?dataset=detail` |
 | Search citations (`listCitations`) | search | `GET /projects/{project}/citations` |
-| Get search performance (`getSearchPerformance`) | action (read) | `GET /projects/{project}/search-performance` |
-| Get AI traffic (`getAiTraffic`) | action (read) | `GET /projects/{project}/ai-traffic` |
+| Get search performance (`getSearchPerformance`) | action (read) | `GET /projects/{project}/search-performance` (`summary`, `opportunities`, `trends`) |
+| List search performance rows (`listSearchPerformanceRows`) | search | `GET /projects/{project}/search-performance` (query, page and country lists, question-shaped queries, `daily`, `history`) |
+| Get AI traffic (`getAiTraffic`) | action (read) | `GET /projects/{project}/ai-traffic?dataset=summary` |
+| List AI traffic rows (`listAiTrafficRows`) | search | `GET /projects/{project}/ai-traffic` (`landing_pages`, `sources`, `daily`, `history`) |
 | Make an API call (`makeApiCall`) | universal | any `GET` under `https://app.searcherries.com/api` |
 
-Search modules iterate the rows of the response, follow `pagination.has_more` with `offset = offset + returned` and stop at the module's **Limit** (default 10, as Make recommends). Action modules return the whole response as one bundle. The project is picked through the `rpcProjects` RPC (`GET /projects`); the customer question through `rpcQuestions`, nested under the project (`GET /projects/{project}?include=questions`). Every select's options and defaults come from the enums of the OpenAPI document.
+Search modules iterate the rows of the response, follow `pagination.has_more` with `offset = offset + returned` and stop at the module's **Limit** (default 10, as Make recommends); datasets the API serves in one response (`daily`, `history`, AI `sources`) carry no `pagination` and stop after the first page. Action modules return the whole response as one bundle and expose no paging fields (Make's review, 2026-10-20: list datasets belong in search modules). **Get a competitor** returns `found: false` with a `reason` instead of failing when no tracked brand matches. The project is picked through the `rpcProjects` RPC (`GET /projects`); the customer question through `rpcQuestions`, nested under the project (`GET /projects/{project}?include=questions`). Every select's options and defaults come from the enums of the OpenAPI document.
 
-Errors use the API envelope: `[401]` with the token hint, `[403]` with `plans_url` for `paid_plan_required`, `[404]`, `[422]` with the per-field messages (`DataError`), `[429]` with `retry_after` (`RateLimitError`, Make suspends and retries). The authorization header is sanitized from logs.
+Errors use the API envelope: `[401]` with the token hint (`InvalidAccessTokenError`), `[403]` with `plans_url` for `paid_plan_required`, `[404]` (with a project hint only for the API's `Project not found.`), `[422]` with the per-field messages (`DataError`), `[429]` with `retry_after` (`RateLimitError`, Make suspends and retries). The authorization header is sanitized from logs.
 
 ### Logo
 

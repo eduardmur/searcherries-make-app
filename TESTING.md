@@ -54,7 +54,7 @@ Expect one bundle per brand ordered by `rank`, the own brand with `is_own_brand`
 
 Scenario `Searcherries – competitor detail`: **Get a competitor**, Competitor = a name from scenario 5 (a fragment works, for example `mixp`) → sink.
 
-Expect one bundle, `found` true, `competitor.name_variants` and `competitor.platform_highlights`. Run again with Competitor `zzz-no-such-brand`: the module errors with `[404] No competitor matching 'zzz-no-such-brand' was found ...` (a `DataError`, so the bundle goes to incomplete executions when those are enabled).
+Expect one bundle, `found` true, `competitor.name_variants` and `competitor.platform_highlights`. Run again with Competitor `zzz-no-such-brand`: one bundle with `found` false and a `reason`, no error (a no-match is a result a scenario can filter on).
 
 ## 7. Search citations (search, paginated)
 
@@ -66,13 +66,25 @@ Expect one bundle per URL with `mention_count`, `platforms`, `prompt_ids`, `is_o
 
 Scenario `Searcherries – search performance`: **Get search performance**, Source `Google Search Console`, Window `Last 30 days`, Dataset `Summary` → sink.
 
-Expect `available` true, `total_clicks`, `total_impressions`, `top_queries` (10 rows). Then Dataset `Top queries`, Sort by `Impressions, descending`, Minimum impressions 100, Rows per page 20, Offset 20: `rows` has at most 20 entries, all with `impressions >= 100`, `pagination.offset` 20. Source `Bing Webmaster Tools` on a project without Bing: `available` false with a `reason`, no error.
+Expect `available` true, `total_clicks`, `total_impressions`, `top_queries` (10 rows). Dataset `Opportunities`, Rows per list 5: each opportunity list has at most 5 rows. Source `Bing Webmaster Tools` on a project without Bing: `available` false with a `reason`, no error.
+
+## 8b. List search performance rows (search, paginated)
+
+Scenario route: **List search performance rows**, Source `Google Search Console`, Window `Last 365 days`, Dataset `Question-shaped queries`, Limit 150.
+
+Expect one bundle per query with `query`, `clicks`, `impressions`, `ctr`, `position`; with more than 100 question-shaped queries the log shows two requests (`offset=0`, `offset=100`). Then Dataset `Top queries`, Sort by `Impressions, descending`, Minimum impressions 100: every bundle has `impressions >= 100`. Dataset `Daily series`: one bundle per day (`date`, `clicks`, `impressions`), one request. Source `Bing Webmaster Tools` on a project without Bing: no bundles, no error.
 
 ## 9. Get AI traffic (action)
 
-Scenario `Searcherries – AI traffic`: **Get AI traffic**, Window `Last 90 days`, Dataset `Summary` → sink.
+Scenario `Searcherries – AI traffic`: **Get AI traffic**, Window `Last 90 days` → sink.
 
-Expect `available` true, `ai_traffic.sessions`, `sources` with one row per AI source. Then Dataset `Landing pages`, AI source `ChatGPT`, Path contains `/`: `rows` of landing pages with `source` `chatgpt`. Dataset `History`: monthly rows.
+Expect `available` true, `ai_traffic.sessions`, `sources` with one row per AI source.
+
+## 9b. List AI traffic rows (search)
+
+Scenario route: **List AI traffic rows**, Window `Last 365 days`, Dataset `Landing pages`, Limit 150.
+
+Expect one bundle per landing page (`source`, `path`, `sessions`, …); with more than 100 landing pages a second request with `offset=100`. AI source `ChatGPT`, Path contains `/`: every bundle has `source` `chatgpt`. Dataset `Monthly history`: one bundle per month (`month`, `sessions`, `days`, `platforms`).
 
 ## 10. Make an API call (universal)
 
@@ -82,9 +94,9 @@ Expect `statusCode` 200 and `body.projects`. Then URL `/v1/projects/<id>/citatio
 
 ## 11. Error scenario (required by the review)
 
-Scenario `Searcherries – error`: **Get search performance**, Dataset `Top queries`, Minimum position 20, Maximum position 5 → sink.
+Scenario `Searcherries – error`: **List search performance rows**, Dataset `Top queries`, Minimum position 20, Maximum position 5.
 
-Expect the module to fail with `[422] The request parameters are invalid. max_position: ...` and the execution to stop (`DataError`). Keep this scenario's log for the review.
+Expect the module to fail with `[422] The request parameters are invalid. The max position field must be greater than or equal to 20.` and the execution to stop (`DataError`; seen live on 2026-10-20). Keep this scenario's log for the review.
 
 Also worth one run: a connection whose token was revoked on the MCP page → `[401]` on the next execution.
 

@@ -61,7 +61,7 @@ curl -s -H "Authorization: Token $(cat .secrets/apikey)" https://eu1.make.com/ap
 1. Right-click `src/makecomapp.json` → **Deploy to Make (beta)** → choose the origin.
 2. For every component the extension cannot pair with an existing remote one (all of them the first time) a dialog asks how to resolve it: choose **create new component in Make**. Make assigns the connection its remote name (`searcherries` or similar); modules and RPCs keep their IDs.
 3. The extension deploys in dependency order (connection → RPCs → modules). The groups file lists the modules, so if the `groups` deploy is reported as failed because a module did not exist yet, right-click `src/modules/groups.json` → **Deploy to Make** once more at the end.
-4. In the Make web interface (Custom apps → Searcherries) check: Base tab shows the `https://app.searcherries.com/api/v1` base; Connections has one basic connection; Modules lists the ten modules in the four groups; RPCs lists `rpcProjects` and `rpcQuestions`; the Readme tab shows `src/README.md`.
+4. In the Make web interface (Custom apps → Searcherries) check: Base tab shows the `https://app.searcherries.com/api/v1` base; Connections has one basic connection; Modules lists the twelve modules in the four groups; RPCs lists `rpcProjects` and `rpcQuestions`; the Readme tab shows `src/README.md`.
 
 Later changes: edit the local files, `npm test`, commit, then **Deploy to Make** on the file, the component folder or the manifest. **Pull All Components from Make** brings edits made online back into the files; **Compare with Make** diffs one file.
 
@@ -69,10 +69,15 @@ Later changes: edit the local files, `npm test`, commit, then **Deploy to Make**
 
 Follow `TESTING.md`: one scenario per module, the error scenario and the paginated runs. Keep the scenarios; the review form asks for links to them and the reviewer reads their execution logs (logs expire, so re-run right before submitting).
 
-Two things only a live run can confirm, so look at them first:
+Three things only a live run could confirm; all three worked on 2026-10-20 (app `searcherries-340mt5`):
 
-- The `[422]` message assembles the per-field errors with `join(flatten(map(toArray(body.error.errors), 'value')), ' ')` (base, `response.error.422`). If Make renders it oddly, shorten it to `[422] {{body.error.message}}`.
-- The **Customer question** select is nested under **Project** (`options.store` + `nested`) and its RPC reads `parameters.project`. If the list stays empty after picking a project, replace the nested select with a plain text field `prompt_id`.
+- The `[422]` message assembles the per-field errors with `join(flatten(map(toArray(body.error.errors), 'value')), ' ')` (base, `response.error.422`): Make shows `[422] The request parameters are invalid. The max position field must be greater than or equal to 20.`
+- The **Customer question** select is nested under **Project** (`options.store` + `nested`) and its RPC reads `parameters.project`: picking a question sent its `prompt_id`.
+- The groups deploy after the modules in one **Deploy to Make** run.
+
+The scenarios used for the review: one scenario **Searcherries – all modules** (the six single-result modules in a chain, then a Router with the search modules at the ends of its routes, so nothing runs once per row; Search AI answers with answer text on and Limit 30 to show 20-row pages) and **Searcherries – error**. A first version with the search modules mid-chain ran every later module once per row and hit the `[429]` limit.
+
+Automatic review, 2026-10-20 (AppBot): the action modules **Get search performance** and **Get AI traffic** exposed Rows per page / Offset for list datasets. Fixed by moving those datasets into the search modules **List search performance rows** and **List AI traffic rows** (two more Router routes in the all-modules scenario; the error scenario now uses List search performance rows), returning a competitor no-match as `found: false`, entity names on bare IDs, brand casing, one `Project` label without the map toggle on by default, `InvalidAccessTokenError` on 401 and a project hint on 404 only for `Project not found.`. Make an API call stays GET-only: the API is read-only.
 
 ## 6. Before publishing (you)
 

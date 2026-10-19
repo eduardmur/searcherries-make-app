@@ -37,12 +37,62 @@ const COMPETITOR_HISTORY_ROW = {
     },
 };
 
-/** Module directory → how to build its interface. */
+/**
+ * Rows of the list datasets of GET /search-performance (the spec types `rows` as free objects):
+ * top queries / pages / countries and question-shaped queries (SearchRow), queries by country,
+ * the daily series and the monthly history.
+ */
+const SEARCH_PERFORMANCE_ROW = {
+    anyOf: [
+        { $ref: '#/components/schemas/SearchRow' },
+        {
+            type: 'object',
+            properties: {
+                total_clicks: { type: 'integer' },
+                total_impressions: { type: 'integer' },
+                queries: { type: 'array', items: { $ref: '#/components/schemas/SearchRow' } },
+            },
+        },
+        {
+            type: 'object',
+            properties: {
+                date: { type: 'string', format: 'date' },
+                month: { type: 'string' },
+                days: { type: 'integer' },
+            },
+        },
+    ],
+};
+
+/** Rows of the list datasets of GET /ai-traffic: per source, landing pages, daily series, monthly history. */
+const AI_TRAFFIC_ROW = {
+    anyOf: [
+        { $ref: '#/components/schemas/AiTrafficSource' },
+        { $ref: '#/components/schemas/LandingPageRow' },
+        {
+            type: 'object',
+            properties: {
+                date: { type: 'string', format: 'date' },
+                month: { type: 'string' },
+                days: { type: 'integer' },
+                platforms: { type: 'object', additionalProperties: { type: 'integer' } },
+            },
+        },
+    ],
+};
+
+/** Fields of the list datasets, which moved to the paginated search modules. */
+const LIST_FIELDS = ['dimension', 'sort', 'rows', 'pagination', 'granularity'];
+
+/**
+ * Module directory → how to build its interface. `entity` names the bare `id` of the
+ * top-level output (`Project ID`, `Answer ID`).
+ */
 const MODULES = {
-    'list-projects': { schema: 'ProjectListItem' },
+    'list-projects': { schema: 'ProjectListItem', entity: 'Project' },
     'get-project-summary': { schema: 'ProjectSummary' },
     'get-action-plan': { schema: 'ActionPlan' },
-    'list-answers': { schema: 'AnswerRow' },
+    'list-answers': { schema: 'AnswerRow', entity: 'Answer' },
     'list-competitors': { union: [{ $ref: '#/components/schemas/CompetitorRow' }, COMPETITOR_HISTORY_ROW] },
     'get-competitor': {
         schema: 'CompetitorsResponse',
@@ -50,13 +100,29 @@ const MODULES = {
         override: { competitor: { $ref: '#/components/schemas/CompetitorRow' } },
     },
     'list-citations': { union: [{ $ref: '#/components/schemas/CitationUrlRow' }, { $ref: '#/components/schemas/CitationDomainRow' }] },
-    'get-search-performance': { schema: 'SearchPerformanceResponse' },
-    'get-ai-traffic': { schema: 'AiTrafficResponse' },
+    'get-search-performance': { schema: 'SearchPerformanceResponse', omit: LIST_FIELDS },
+    'list-search-performance-rows': { union: SEARCH_PERFORMANCE_ROW.anyOf },
+    'get-ai-traffic': { schema: 'AiTrafficResponse', omit: LIST_FIELDS },
+    'list-ai-traffic-rows': { union: AI_TRAFFIC_ROW.anyOf },
 };
 
 const ACRONYMS = { id: 'ID', ids: 'IDs', url: 'URL', urls: 'URLs', ga4: 'GA4', ctr: 'CTR', ai: 'AI', api: 'API', seo: 'SEO', kpi: 'KPI', kpis: 'KPIs' };
 
+/** Whole keys whose label is not the word-by-word one: brand names keep their casing. */
+const NAMES = {
+    google_search_console: 'Google Search Console',
+    bing_webmaster_tools: 'Bing Webmaster Tools',
+    response_chars: 'Response characters',
+};
+
+/**
+ * The entity a bare `id` belongs to, by the key of the collection or array that holds it
+ * (`project` → Project ID, `actions` → Action ID; question blocks hold `primary`/`additional`).
+ */
+const ID_ENTITIES = { project: 'Project', primary: 'Question', additional: 'Question', questions: 'Question', actions: 'Action' };
+
 function label(name) {
+    if (NAMES[name]) return NAMES[name];
     const words = name.split('_').filter(Boolean).map((w) => ACRONYMS[w] ?? w);
     const [first, ...rest] = words;
     const head = ACRONYMS[first.toLowerCase()] ? first : first.charAt(0).toUpperCase() + first.slice(1);
@@ -109,14 +175,20 @@ function baseType(node) {
     return 'any';
 }
 
-function toParam(name, node, withName = true) {
+function idLabel(entity) {
+    return entity ? `${entity} ID` : 'ID';
+}
+
+/** `entity` is the owner of a bare `id` among this node's own properties. */
+function toParam(name, node, withName = true, entity = null) {
     const schema = resolve(node);
     const type = baseType(schema);
-    const param = withName ? { name, label: label(name) } : { label: label(singular(name)) };
+    const param = withName ? { name, label: name === 'id' ? idLabel(entity) : label(name) } : { label: label(singular(name)) };
+    const childEntity = ID_ENTITIES[name] ?? label(singular(name));
     switch (type) {
         case 'object': {
             param.type = 'collection';
-            param.spec = schema.properties ? Object.entries(schema.properties).map(([k, v]) => toParam(k, v)) : [];
+            param.spec = schema.properties ? Object.entries(schema.properties).map(([k, v]) => toParam(k, v, true, childEntity)) : [];
             if (param.spec.length === 0 && schema.additionalProperties === undefined) param.spec = [];
             break;
         }
@@ -125,7 +197,7 @@ function toParam(name, node, withName = true) {
             const items = resolve(schema.items ?? {});
             const itemType = baseType(items);
             if (itemType === 'object') {
-                if (items.properties) param.spec = Object.entries(items.properties).map(([k, v]) => toParam(k, v));
+                if (items.properties) param.spec = Object.entries(items.properties).map(([k, v]) => toParam(k, v, true, childEntity));
                 // unknown object structure: Make wants no spec on arrays
             } else if (itemType !== 'any') {
                 const inner = toParam(name, items, false);
@@ -163,8 +235,9 @@ function buildInterface(config) {
     }
     let entries = Object.entries(schema.properties ?? {});
     if (config.pick) entries = config.pick.map((k) => [k, schema.properties[k]]);
+    if (config.omit) entries = entries.filter(([k]) => !config.omit.includes(k));
     if (config.override) entries = entries.map(([k, v]) => [k, config.override[k] ?? v]);
-    return entries.map(([k, v]) => toParam(k, v));
+    return entries.map(([k, v]) => toParam(k, v, true, config.entity ?? null));
 }
 
 let outdated = 0;

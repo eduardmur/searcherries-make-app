@@ -3,11 +3,7 @@
     "method": "GET",
     "qs": {
         "period": "{{ifempty(parameters.period, '30d')}}",
-        "dataset": "{{ifempty(parameters.dataset, 'summary')}}",
-        "source": "{{ifempty(parameters.source, undefined)}}",
-        "path_contains": "{{ifempty(parameters.path_contains, undefined)}}",
-        "limit": "{{ifempty(parameters.limit, undefined)}}",
-        "offset": "{{ifempty(parameters.offset, undefined)}}"
+        "dataset": "summary"
     },
     "response": {
         "output": "{{body}}"

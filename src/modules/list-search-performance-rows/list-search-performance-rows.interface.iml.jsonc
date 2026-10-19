@@ -1,0 +1,104 @@
+[
+    {
+        "name": "query",
+        "type": "text",
+        "label": "Query"
+    },
+    {
+        "name": "page",
+        "type": "text",
+        "label": "Page"
+    },
+    {
+        "name": "country",
+        "type": "text",
+        "label": "Country"
+    },
+    {
+        "name": "clicks",
+        "type": "integer",
+        "label": "Clicks"
+    },
+    {
+        "name": "impressions",
+        "type": "integer",
+        "label": "Impressions"
+    },
+    {
+        "name": "ctr",
+        "type": "number",
+        "label": "CTR"
+    },
+    {
+        "name": "position",
+        "type": "number",
+        "label": "Position"
+    },
+    {
+        "name": "total_clicks",
+        "type": "integer",
+        "label": "Total clicks"
+    },
+    {
+        "name": "total_impressions",
+        "type": "integer",
+        "label": "Total impressions"
+    },
+    {
+        "name": "queries",
+        "type": "array",
+        "label": "Queries",
+        "spec": [
+            {
+                "name": "query",
+                "type": "text",
+                "label": "Query"
+            },
+            {
+                "name": "page",
+                "type": "text",
+                "label": "Page"
+            },
+            {
+                "name": "country",
+                "type": "text",
+                "label": "Country"
+            },
+            {
+                "name": "clicks",
+                "type": "integer",
+                "label": "Clicks"
+            },
+            {
+                "name": "impressions",
+                "type": "integer",
+                "label": "Impressions"
+            },
+            {
+                "name": "ctr",
+                "type": "number",
+                "label": "CTR"
+            },
+            {
+                "name": "position",
+                "type": "number",
+                "label": "Position"
+            }
+        ]
+    },
+    {
+        "name": "date",
+        "type": "text",
+        "label": "Date"
+    },
+    {
+        "name": "month",
+        "type": "text",
+        "label": "Month"
+    },
+    {
+        "name": "days",
+        "type": "integer",
+        "label": "Days"
+    }
+]

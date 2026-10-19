@@ -2,7 +2,7 @@
     {
         "name": "id",
         "type": "integer",
-        "label": "ID"
+        "label": "Project ID"
     },
     {
         "name": "brand_name",
@@ -66,12 +66,12 @@
             {
                 "name": "google_search_console",
                 "type": "boolean",
-                "label": "Google search console"
+                "label": "Google Search Console"
             },
             {
                 "name": "bing_webmaster_tools",
                 "type": "boolean",
-                "label": "Bing webmaster tools"
+                "label": "Bing Webmaster Tools"
             }
         ]
     },
@@ -100,7 +100,7 @@
             {
                 "name": "google_search_console",
                 "type": "collection",
-                "label": "Google search console",
+                "label": "Google Search Console",
                 "spec": [
                     {
                         "name": "latest_fetched_at",
@@ -117,7 +117,7 @@
             {
                 "name": "bing_webmaster_tools",
                 "type": "collection",
-                "label": "Bing webmaster tools",
+                "label": "Bing Webmaster Tools",
                 "spec": [
                     {
                         "name": "latest_fetched_at",

@@ -5,16 +5,7 @@
         "source": "{{ifempty(parameters.source, 'google')}}",
         "period": "{{ifempty(parameters.period, '30d')}}",
         "dataset": "{{ifempty(parameters.dataset, 'summary')}}",
-        "query_contains": "{{ifempty(parameters.query_contains, undefined)}}",
-        "page_contains": "{{ifempty(parameters.page_contains, undefined)}}",
-        "country": "{{ifempty(parameters.country, undefined)}}",
-        "min_impressions": "{{ifempty(parameters.min_impressions, undefined)}}",
-        "min_clicks": "{{ifempty(parameters.min_clicks, undefined)}}",
-        "min_position": "{{ifempty(parameters.min_position, undefined)}}",
-        "max_position": "{{ifempty(parameters.max_position, undefined)}}",
-        "sort": "{{ifempty(parameters.sort, undefined)}}",
-        "limit": "{{ifempty(parameters.limit, undefined)}}",
-        "offset": "{{ifempty(parameters.offset, undefined)}}"
+        "limit": "{{ifempty(parameters.rows_per_list, undefined)}}"
     },
     "response": {
         "output": "{{body}}"

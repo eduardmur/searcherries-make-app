@@ -20,7 +20,9 @@
         "label": "Search and traffic",
         "modules": [
             "getSearchPerformance",
-            "getAiTraffic"
+            "listSearchPerformanceRows",
+            "getAiTraffic",
+            "listAiTrafficRows"
         ]
     },
     {

@@ -1,0 +1,23 @@
+{
+    "url": "/projects/{{parameters.project}}/ai-traffic",
+    "method": "GET",
+    "qs": {
+        "period": "{{ifempty(parameters.period, '30d')}}",
+        "dataset": "{{ifempty(parameters.dataset, 'landing_pages')}}",
+        "source": "{{ifempty(parameters.source, undefined)}}",
+        "path_contains": "{{ifempty(parameters.path_contains, undefined)}}",
+        // Largest page the API serves. Only `landing_pages` is paginated; the other lists come in one response.
+        "limit": 100
+    },
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.rows}}",
+        "output": "{{item}}"
+    },
+    "pagination": {
+        "qs": {
+            "offset": "{{body.pagination.offset + body.pagination.returned}}"
+        },
+        "condition": "{{body.pagination.has_more}}"
+    }
+}

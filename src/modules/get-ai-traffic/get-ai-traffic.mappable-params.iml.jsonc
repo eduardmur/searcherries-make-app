@@ -2,11 +2,10 @@
     {
         "name": "project",
         "type": "select",
-        "label": "Project ID",
+        "label": "Project",
         "required": true,
-        "mode": "edit",
         "options": "rpc://rpcProjects",
-        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
     },
     {
         "name": "period",
@@ -28,100 +27,5 @@
             }
         ],
         "help": "Rolling window of the stored GA4 snapshot, ending on the collection day. If left empty, `30d` is used."
-    },
-    {
-        "name": "dataset",
-        "type": "select",
-        "label": "Dataset",
-        "default": "summary",
-        "options": [
-            {
-                "label": "Summary: totals and one row per AI source",
-                "value": "summary"
-            },
-            {
-                "label": "Sources: per AI source with top landing pages and referrers",
-                "value": "sources"
-            },
-            {
-                "label": "Landing pages: flat, filterable list",
-                "value": "landing_pages"
-            },
-            {
-                "label": "Daily series",
-                "value": "daily"
-            },
-            {
-                "label": "Monthly history",
-                "value": "history"
-            }
-        ],
-        "help": "Which stored data to return. When GA4 is not connected or the window has no stored data, the output says `available: false` and `reason` explains why. If left empty, `summary` is used."
-    },
-    {
-        "name": "source",
-        "type": "select",
-        "label": "AI source",
-        "options": [
-            {
-                "label": "ChatGPT",
-                "value": "chatgpt"
-            },
-            {
-                "label": "Gemini",
-                "value": "gemini"
-            },
-            {
-                "label": "Perplexity",
-                "value": "perplexity"
-            },
-            {
-                "label": "Claude",
-                "value": "claude"
-            },
-            {
-                "label": "Copilot",
-                "value": "copilot"
-            },
-            {
-                "label": "Meta AI",
-                "value": "meta_ai"
-            },
-            {
-                "label": "Other AI assistants",
-                "value": "other_ai_assistants"
-            },
-            {
-                "label": "Google AI Overviews",
-                "value": "ai_overviews"
-            }
-        ],
-        "help": "Restricts the `sources` and `landing_pages` datasets to one AI source. If left empty, every source is included."
-    },
-    {
-        "name": "path_contains",
-        "type": "text",
-        "label": "Path contains",
-        "validate": {
-            "max": 300
-        },
-        "help": "Case-insensitive text the landing page path must contain (`landing_pages` dataset). For example, `/pricing`."
-    },
-    {
-        "name": "limit",
-        "type": "uinteger",
-        "label": "Rows per page",
-        "validate": {
-            "min": 1,
-            "max": 100
-        },
-        "help": "Rows returned by the `landing_pages` dataset, `1` to `100`. The `pagination` field of the output says whether more rows exist; set **Offset** to fetch them. If left empty, `25` rows are returned."
-    },
-    {
-        "name": "offset",
-        "type": "uinteger",
-        "label": "Offset",
-        "advanced": true,
-        "help": "Rows to skip before the first returned row (`landing_pages` dataset). For example, `25` for the second page of 25 rows. If left empty, the first page is returned."
     }
 ]

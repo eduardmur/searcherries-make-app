@@ -55,7 +55,7 @@
                     {
                         "name": "google_search_console",
                         "type": "boolean",
-                        "label": "Google search console"
+                        "label": "Google Search Console"
                     },
                     {
                         "name": "ga4",
@@ -94,7 +94,7 @@
             {
                 "name": "id",
                 "type": "text",
-                "label": "ID"
+                "label": "Action ID"
             },
             {
                 "name": "priority",
@@ -294,7 +294,7 @@
                             {
                                 "name": "google_search_console",
                                 "type": "boolean",
-                                "label": "Google search console"
+                                "label": "Google Search Console"
                             },
                             {
                                 "name": "ga4",
@@ -420,7 +420,7 @@
                             {
                                 "name": "id",
                                 "type": "integer",
-                                "label": "ID"
+                                "label": "Question ID"
                             },
                             {
                                 "name": "question",
@@ -452,7 +452,7 @@
                             {
                                 "name": "id",
                                 "type": "integer",
-                                "label": "ID"
+                                "label": "Question ID"
                             },
                             {
                                 "name": "question",
@@ -713,7 +713,7 @@
                     {
                         "name": "google_search_console",
                         "type": "collection",
-                        "label": "Google search console",
+                        "label": "Google Search Console",
                         "spec": [
                             {
                                 "name": "connected",
@@ -725,7 +725,7 @@
                     {
                         "name": "bing_webmaster_tools",
                         "type": "collection",
-                        "label": "Bing webmaster tools",
+                        "label": "Bing Webmaster Tools",
                         "spec": [
                             {
                                 "name": "connected",

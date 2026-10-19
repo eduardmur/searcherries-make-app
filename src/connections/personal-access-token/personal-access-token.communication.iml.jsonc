@@ -12,6 +12,7 @@
         "error": {
             "message": "[{{statusCode}}] {{ifempty(body.error.message, ifempty(body.message, 'Searcherries returned an unexpected error.'))}}",
             "401": {
+                "type": "InvalidAccessTokenError",
                 "message": "[401] {{ifempty(body.error.message, 'The personal access token was rejected.')}} Paste a token created on https://app.searcherries.com/mcp (tab Other clients); it is shown once when created."
             },
             "403": {

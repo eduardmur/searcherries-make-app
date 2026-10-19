@@ -1,0 +1,73 @@
+[
+    {
+        "name": "source",
+        "type": "text",
+        "label": "Source"
+    },
+    {
+        "name": "sessions",
+        "type": "integer",
+        "label": "Sessions"
+    },
+    {
+        "name": "users",
+        "type": "integer",
+        "label": "Users"
+    },
+    {
+        "name": "pageviews",
+        "type": "integer",
+        "label": "Pageviews"
+    },
+    {
+        "name": "engaged_sessions",
+        "type": "integer",
+        "label": "Engaged sessions"
+    },
+    {
+        "name": "conversions",
+        "type": "integer",
+        "label": "Conversions"
+    },
+    {
+        "name": "detection_method",
+        "type": "text",
+        "label": "Detection method"
+    },
+    {
+        "name": "landing_pages",
+        "type": "array",
+        "label": "Landing pages"
+    },
+    {
+        "name": "referrers",
+        "type": "array",
+        "label": "Referrers"
+    },
+    {
+        "name": "path",
+        "type": "text",
+        "label": "Path"
+    },
+    {
+        "name": "date",
+        "type": "text",
+        "label": "Date"
+    },
+    {
+        "name": "month",
+        "type": "text",
+        "label": "Month"
+    },
+    {
+        "name": "days",
+        "type": "integer",
+        "label": "Days"
+    },
+    {
+        "name": "platforms",
+        "type": "collection",
+        "label": "Platforms",
+        "spec": []
+    }
+]

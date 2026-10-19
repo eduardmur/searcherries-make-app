@@ -7,7 +7,7 @@
             {
                 "name": "id",
                 "type": "integer",
-                "label": "ID"
+                "label": "Project ID"
             },
             {
                 "name": "brand_name",
@@ -155,99 +155,5 @@
                 "label": "Referrers"
             }
         ]
-    },
-    {
-        "name": "rows",
-        "type": "array",
-        "label": "Rows",
-        "spec": [
-            {
-                "name": "source",
-                "type": "text",
-                "label": "Source"
-            },
-            {
-                "name": "sessions",
-                "type": "integer",
-                "label": "Sessions"
-            },
-            {
-                "name": "users",
-                "type": "integer",
-                "label": "Users"
-            },
-            {
-                "name": "pageviews",
-                "type": "integer",
-                "label": "Pageviews"
-            },
-            {
-                "name": "engaged_sessions",
-                "type": "integer",
-                "label": "Engaged sessions"
-            },
-            {
-                "name": "conversions",
-                "type": "integer",
-                "label": "Conversions"
-            },
-            {
-                "name": "detection_method",
-                "type": "text",
-                "label": "Detection method"
-            },
-            {
-                "name": "landing_pages",
-                "type": "array",
-                "label": "Landing pages"
-            },
-            {
-                "name": "referrers",
-                "type": "array",
-                "label": "Referrers"
-            },
-            {
-                "name": "path",
-                "type": "text",
-                "label": "Path"
-            }
-        ]
-    },
-    {
-        "name": "pagination",
-        "type": "collection",
-        "label": "Pagination",
-        "spec": [
-            {
-                "name": "offset",
-                "type": "integer",
-                "label": "Offset"
-            },
-            {
-                "name": "limit",
-                "type": "integer",
-                "label": "Limit"
-            },
-            {
-                "name": "returned",
-                "type": "integer",
-                "label": "Returned"
-            },
-            {
-                "name": "total",
-                "type": "integer",
-                "label": "Total"
-            },
-            {
-                "name": "has_more",
-                "type": "boolean",
-                "label": "Has more"
-            }
-        ]
-    },
-    {
-        "name": "granularity",
-        "type": "text",
-        "label": "Granularity"
     }
 ]

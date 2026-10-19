@@ -7,7 +7,7 @@
             {
                 "name": "id",
                 "type": "integer",
-                "label": "ID"
+                "label": "Project ID"
             },
             {
                 "name": "brand_name",

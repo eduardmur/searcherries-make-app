@@ -2,11 +2,10 @@
     {
         "name": "project",
         "type": "select",
-        "label": "Project ID",
+        "label": "Project",
         "required": true,
-        "mode": "edit",
         "options": "rpc://rpcProjects",
-        "help": "ID of the Searcherries project to read. Switch the map toggle off to pick a project from the list of the account that created the token."
+        "help": "The Searcherries project to read. The list shows the projects of the account that created the token."
     },
     {
         "name": "period",

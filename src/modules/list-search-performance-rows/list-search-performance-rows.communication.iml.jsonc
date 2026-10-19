@@ -1,0 +1,30 @@
+{
+    "url": "/projects/{{parameters.project}}/search-performance",
+    "method": "GET",
+    "qs": {
+        "source": "{{ifempty(parameters.source, 'google')}}",
+        "period": "{{ifempty(parameters.period, '30d')}}",
+        "dataset": "{{ifempty(parameters.dataset, 'top_queries')}}",
+        "query_contains": "{{ifempty(parameters.query_contains, undefined)}}",
+        "page_contains": "{{ifempty(parameters.page_contains, undefined)}}",
+        "country": "{{ifempty(parameters.country, undefined)}}",
+        "min_impressions": "{{ifempty(parameters.min_impressions, undefined)}}",
+        "min_clicks": "{{ifempty(parameters.min_clicks, undefined)}}",
+        "min_position": "{{ifempty(parameters.min_position, undefined)}}",
+        "max_position": "{{ifempty(parameters.max_position, undefined)}}",
+        "sort": "{{ifempty(parameters.sort, undefined)}}",
+        // Largest page the API serves. `daily` and `history` come in one response without `pagination`.
+        "limit": 100
+    },
+    "response": {
+        "limit": "{{parameters.limit}}",
+        "iterate": "{{body.rows}}",
+        "output": "{{item}}"
+    },
+    "pagination": {
+        "qs": {
+            "offset": "{{body.pagination.offset + body.pagination.returned}}"
+        },
+        "condition": "{{body.pagination.has_more}}"
+    }
+}

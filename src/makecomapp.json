@@ -127,7 +127,7 @@
             },
             "getSearchPerformance": {
                 "label": "Get search performance",
-                "description": "Returns the Google Search Console or Bing Webmaster Tools data stored for a project and one rolling window: totals and top lists, or one list dataset such as top queries, opportunities, trends, the daily series or the monthly history.",
+                "description": "Returns the Google Search Console or Bing Webmaster Tools data stored for a project and one rolling window: totals with the top-10 lists, opportunities, or growing and falling trends.",
                 "moduleType": "action",
                 "actionCrud": "read",
                 "connection": "personalAccessToken",
@@ -140,9 +140,24 @@
                     "samples": "modules/get-search-performance/get-search-performance.samples.iml.jsonc"
                 }
             },
+            "listSearchPerformanceRows": {
+                "label": "List search performance rows",
+                "description": "Returns the rows of one Google Search Console or Bing Webmaster Tools list stored for a project and one rolling window: top queries, pages or countries, queries by country, question-shaped queries, the daily series or the monthly history.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-search-performance-rows/list-search-performance-rows.communication.iml.jsonc",
+                    "staticParams": "modules/list-search-performance-rows/list-search-performance-rows.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-search-performance-rows/list-search-performance-rows.mappable-params.iml.jsonc",
+                    "interface": "modules/list-search-performance-rows/list-search-performance-rows.interface.iml.jsonc",
+                    "samples": "modules/list-search-performance-rows/list-search-performance-rows.samples.iml.jsonc"
+                }
+            },
             "getAiTraffic": {
                 "label": "Get AI traffic",
-                "description": "Returns the Google Analytics 4 traffic from AI assistants and AI Overviews stored for a project and one rolling window: totals per AI source, landing pages, the daily series or the monthly history.",
+                "description": "Returns the Google Analytics 4 traffic from AI assistants and AI Overviews stored for a project and one rolling window: all-site totals for context, AI-traffic totals and one row per AI source.",
                 "moduleType": "action",
                 "actionCrud": "read",
                 "connection": "personalAccessToken",
@@ -153,6 +168,21 @@
                     "mappableParams": "modules/get-ai-traffic/get-ai-traffic.mappable-params.iml.jsonc",
                     "interface": "modules/get-ai-traffic/get-ai-traffic.interface.iml.jsonc",
                     "samples": "modules/get-ai-traffic/get-ai-traffic.samples.iml.jsonc"
+                }
+            },
+            "listAiTrafficRows": {
+                "label": "List AI traffic rows",
+                "description": "Returns the rows of one Google Analytics 4 AI-traffic list stored for a project and one rolling window: landing pages of AI visitors, AI sources with their top landing pages and referrers, the daily series or the monthly history.",
+                "moduleType": "search",
+                "actionCrud": null,
+                "connection": "personalAccessToken",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-ai-traffic-rows/list-ai-traffic-rows.communication.iml.jsonc",
+                    "staticParams": "modules/list-ai-traffic-rows/list-ai-traffic-rows.static-params.iml.jsonc",
+                    "mappableParams": "modules/list-ai-traffic-rows/list-ai-traffic-rows.mappable-params.iml.jsonc",
+                    "interface": "modules/list-ai-traffic-rows/list-ai-traffic-rows.interface.iml.jsonc",
+                    "samples": "modules/list-ai-traffic-rows/list-ai-traffic-rows.samples.iml.jsonc"
                 }
             },
             "makeApiCall": {
