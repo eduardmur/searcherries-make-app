@@ -43,7 +43,11 @@ curl -sS -X PUT "https://eu1.make.com/api/v2/sdk/apps/searcherries/1/icon" \
   --data-binary @assets/logo.png
 ```
 
-If `searcherries` is already taken in your zone, pick another name (for example `searcherries-ai-visibility`) and use it in step 3.
+Make appends a random suffix to the name (the app created on 2026-10-20 in eu1 is `searcherries-340mt5`). Read the real name before step 3, because the deploy fails with "Access denied or App not found" on the bare `searcherries`:
+
+```bash
+curl -s -H "Authorization: Token $(cat .secrets/apikey)" https://eu1.make.com/api/v2/sdk/apps | python3 -c 'import json,sys; [print(a["name"], "|", a.get("label")) for a in json.load(sys.stdin).get("apps", [])]'
+```
 
 ## 3. Point the local app at your Make app (you)
 

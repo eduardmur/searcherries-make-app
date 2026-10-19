@@ -198,13 +198,68 @@
         {
             "label": "Searcherries (production)",
             "baseUrl": "https://eu1.make.com/api",
-            "appId": "searcherries",
+            "appId": "searcherries-340mt5",
             "appVersion": 1,
             "idMapping": {
-                "connection": [],
+                "connection": [
+                    {
+                        "local": "personalAccessToken",
+                        "remote": "searcherries-340mt5"
+                    }
+                ],
                 "webhook": [],
-                "module": [],
-                "rpc": [],
+                "module": [
+                    {
+                        "local": "listProjects",
+                        "remote": "listProjects"
+                    },
+                    {
+                        "local": "getProjectSummary",
+                        "remote": "getProjectSummary"
+                    },
+                    {
+                        "local": "getActionPlan",
+                        "remote": "getActionPlan"
+                    },
+                    {
+                        "local": "listAnswers",
+                        "remote": "listAnswers"
+                    },
+                    {
+                        "local": "listCompetitors",
+                        "remote": "listCompetitors"
+                    },
+                    {
+                        "local": "getCompetitor",
+                        "remote": "getCompetitor"
+                    },
+                    {
+                        "local": "listCitations",
+                        "remote": "listCitations"
+                    },
+                    {
+                        "local": "getSearchPerformance",
+                        "remote": "getSearchPerformance"
+                    },
+                    {
+                        "local": "getAiTraffic",
+                        "remote": "getAiTraffic"
+                    },
+                    {
+                        "local": "makeApiCall",
+                        "remote": "makeApiCall"
+                    }
+                ],
+                "rpc": [
+                    {
+                        "local": "rpcProjects",
+                        "remote": "rpcProjects"
+                    },
+                    {
+                        "local": "rpcQuestions",
+                        "remote": "rpcQuestions"
+                    }
+                ],
                 "function": [],
                 "endpoint": []
             },

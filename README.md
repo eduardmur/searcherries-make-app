@@ -16,7 +16,7 @@ The repository is laid out the way the [Make Apps Editor for VS Code](https://ma
 | | |
 | --- | --- |
 | Label | Searcherries |
-| Name (app ID) | `searcherries` (set in `src/makecomapp.json` → `origins[0].appId`; change it if the name is taken in your zone) |
+| Name (app ID) | `searcherries-340mt5` (Make appends a suffix to the name given at creation; set in `src/makecomapp.json` → `origins[0].appId`) |
 | Description | Connect your scenarios to your AI visibility and SEO data: how AI platforms present your brand, the competitors and sources they name, Search Console, Bing and GA4 AI traffic, and a prioritized action plan. |
 | Theme | `#000000` |
 | Language | English |
