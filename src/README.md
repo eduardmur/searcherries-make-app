@@ -12,7 +12,7 @@ Connection
 2. Open the **Other clients** tab, click **Create token** and copy the personal access token (it is shown once).
 3. In Make, create a Searcherries connection and paste the token.
 
-A paid plan (Starter or Pro, an active trial counts) is required. The connection is labelled with the first project of the account.
+Every plan can connect: free accounts read projects, search performance, AI traffic and the action plan; AI answers, competitors and citations need Starter or Pro (an active trial counts). The connection is labelled with the first project of the account.
 
 Modules
 -------
@@ -33,6 +33,6 @@ Modules
 Limits
 ------
 
-60 requests per minute per account on Starter, 120 on Pro. Paginated modules fetch further pages on their own up to the module's **Limit**.
+30 requests per minute per account on Free, 60 on Starter, 120 on Pro. Paginated modules fetch further pages on their own up to the module's **Limit**.
 
 Documentation: <https://searcherries.com/docs/api/endpoints> · Support: <https://searcherries.com/docs/account/support>

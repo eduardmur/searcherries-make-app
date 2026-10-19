@@ -12,7 +12,7 @@ Record for every scenario: run date, module version, bundles returned, and wheth
 | --- | --- |
 | Add any Searcherries module, click **Add** next to Connection, paste the token, save. | The connection is created and labelled `<first project brand> +N more` (or `no projects yet`). |
 | Repeat with a made-up token. | `[401] ... Create a new token on https://app.searcherries.com/mcp ...` and the connection is not saved. |
-| Repeat with a token of a free account (optional). | `[403] ... needs a paid plan ... Choose a plan at https://app.searcherries.com/plans.` |
+| Repeat with a token of a free account (optional). | The connection is saved (free accounts can connect since 2026-10-18). **Search AI answers**, **List competitors** and **Search citations** then stop with `[403] ... needs a paid plan ... Choose a plan at https://app.searcherries.com/plans.` |
 
 ## 1. List projects (search)
 

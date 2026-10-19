@@ -17,10 +17,12 @@ info:
     (`https://app.searcherries.com/mcp`, tab *Other clients*) as a bearer token. Tokens carry the `api:read`
     and `mcp:use` scopes; tokens created before the API existed carry `mcp:use` only and are accepted too.
 
-    **Plan.** A paid plan (Starter or Pro, an active trial counts) is required. Free accounts receive
-    `403 paid_plan_required`.
+    **Plan.** The AI visibility endpoints (`answers`, `competitors`, `citations`) need a paid plan (Starter or
+    Pro, an active trial counts); free accounts receive `403 paid_plan_required` there. Free accounts can read
+    `projects`, `search-performance`, `ai-traffic` and `action-plan` for their data-only project; the AI blocks
+    of a project summary and action plan then carry `status: upgrade_required` with a `plans_url`.
 
-    **Rate limit.** 60 requests per minute per account on Starter, 120 on Pro. Responses carry
+    **Rate limit.** 30 requests per minute per account on Free, 60 on Starter, 120 on Pro. Responses carry
     `X-RateLimit-Limit` and `X-RateLimit-Remaining`; a `429` carries `Retry-After`.
 
     **Errors.** Every error is a JSON object `{"error": {"code", "message", "status"}}`. Validation errors add
