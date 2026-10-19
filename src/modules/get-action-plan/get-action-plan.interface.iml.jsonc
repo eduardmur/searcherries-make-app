@@ -20,6 +20,73 @@
         "label": "Ranking basis"
     },
     {
+        "name": "account",
+        "type": "collection",
+        "label": "Account",
+        "spec": [
+            {
+                "name": "plan",
+                "type": "text",
+                "label": "Plan"
+            },
+            {
+                "name": "included",
+                "type": "array",
+                "label": "Included",
+                "spec": {
+                    "type": "text",
+                    "label": "Included"
+                }
+            },
+            {
+                "name": "not_included",
+                "type": "array",
+                "label": "Not included",
+                "spec": {
+                    "type": "text",
+                    "label": "Not included"
+                }
+            },
+            {
+                "name": "connected",
+                "type": "collection",
+                "label": "Connected",
+                "spec": [
+                    {
+                        "name": "google_search_console",
+                        "type": "boolean",
+                        "label": "Google search console"
+                    },
+                    {
+                        "name": "ga4",
+                        "type": "boolean",
+                        "label": "GA4"
+                    }
+                ]
+            },
+            {
+                "name": "has_data",
+                "type": "boolean",
+                "label": "Has data"
+            },
+            {
+                "name": "message",
+                "type": "text",
+                "label": "Message"
+            },
+            {
+                "name": "connect_url",
+                "type": "url",
+                "label": "Connect URL"
+            },
+            {
+                "name": "plans_url",
+                "type": "url",
+                "label": "Plans URL"
+            }
+        ]
+    },
+    {
         "name": "actions",
         "type": "array",
         "label": "Actions",
@@ -190,6 +257,73 @@
                 "name": "report_url",
                 "type": "url",
                 "label": "Report URL"
+            },
+            {
+                "name": "account",
+                "type": "collection",
+                "label": "Account",
+                "spec": [
+                    {
+                        "name": "plan",
+                        "type": "text",
+                        "label": "Plan"
+                    },
+                    {
+                        "name": "included",
+                        "type": "array",
+                        "label": "Included",
+                        "spec": {
+                            "type": "text",
+                            "label": "Included"
+                        }
+                    },
+                    {
+                        "name": "not_included",
+                        "type": "array",
+                        "label": "Not included",
+                        "spec": {
+                            "type": "text",
+                            "label": "Not included"
+                        }
+                    },
+                    {
+                        "name": "connected",
+                        "type": "collection",
+                        "label": "Connected",
+                        "spec": [
+                            {
+                                "name": "google_search_console",
+                                "type": "boolean",
+                                "label": "Google search console"
+                            },
+                            {
+                                "name": "ga4",
+                                "type": "boolean",
+                                "label": "GA4"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "has_data",
+                        "type": "boolean",
+                        "label": "Has data"
+                    },
+                    {
+                        "name": "message",
+                        "type": "text",
+                        "label": "Message"
+                    },
+                    {
+                        "name": "connect_url",
+                        "type": "url",
+                        "label": "Connect URL"
+                    },
+                    {
+                        "name": "plans_url",
+                        "type": "url",
+                        "label": "Plans URL"
+                    }
+                ]
             },
             {
                 "name": "profile",

@@ -20,6 +20,16 @@
         "label": "Status"
     },
     {
+        "name": "plan",
+        "type": "text",
+        "label": "Plan"
+    },
+    {
+        "name": "ai_tracking",
+        "type": "boolean",
+        "label": "AI tracking"
+    },
+    {
         "name": "country",
         "type": "text",
         "label": "Country"

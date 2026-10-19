@@ -781,7 +781,14 @@ components:
           type: [string, 'null']
         status:
           type: [string, 'null']
-          description: '`pending`, `processing`, `ready`, `paused`, `generating_prompts` or another lifecycle status.'
+          description: '`pending`, `processing`, `ready`, `paused`, `generating_prompts`, `data_only` (the free plan''s project: connected data, no AI checks) or another lifecycle status.'
+        plan:
+          type: string
+          enum: [free, starter, pro]
+          description: Plan of the account that owns the project.
+        ai_tracking:
+          type: boolean
+          description: Whether AI answers are tracked for this project. `false` for the free plan's data-only project and for projects of free accounts.
         country:
           type: [string, 'null']
           description: Lowercase ISO country code; `null` means global.
@@ -851,6 +858,42 @@ components:
               type: integer
             search_performance_snapshots:
               type: integer
+    FreePlanAccount:
+      type: object
+      description: Present only for free accounts. What the free plan reads, what the project has connected and where to connect more.
+      properties:
+        plan:
+          type: string
+          enum: [free]
+        included:
+          type: array
+          description: Data the free plan includes.
+          items:
+            type: string
+        not_included:
+          type: array
+          description: Data that needs Starter or Pro.
+          items:
+            type: string
+        connected:
+          type: object
+          properties:
+            google_search_console:
+              type: boolean
+            ga4:
+              type: boolean
+        has_data:
+          type: boolean
+          description: Whether Search Console or GA4 is connected.
+        message:
+          type: string
+        connect_url:
+          type: string
+          format: uri
+          description: Where to add the site or connect Search Console and GA4.
+        plans_url:
+          type: string
+          format: uri
     ProjectList:
       type: object
       required: [total, projects]
@@ -861,6 +904,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectListItem'
+        account:
+          $ref: '#/components/schemas/FreePlanAccount'
     ProjectSummary:
       type: object
       description: |
@@ -887,6 +932,8 @@ components:
           type: string
           format: uri
           description: The project report in Searcherries.
+        account:
+          $ref: '#/components/schemas/FreePlanAccount'
         profile:
           type: object
           description: Brand, market, platforms, schedule, detected niche, business profile and onboarding context.
@@ -1601,6 +1648,8 @@ components:
           const: true
         ranking_basis:
           type: string
+        account:
+          $ref: '#/components/schemas/FreePlanAccount'
         actions:
           type: array
           items:
