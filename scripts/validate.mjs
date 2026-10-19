@@ -275,7 +275,9 @@ for (const [id, { meta, codes }] of Object.entries(components.module)) {
     }
     if (meta.moduleType === 'universal') {
         if (meta.label !== 'Make an API call') error('src/makecomapp.json', 'universal module label must be "Make an API call"');
-        if (!/^https:\/\/app\.searcherries\.com\/api\/\{\{parameters\.url\}\}$/.test(comm.url ?? '')) error(commFile, 'universal module URL must be https://app.searcherries.com/api/{{parameters.url}} (base host, version in the path)');
+        // The path is typed as /v1/...: the URL must strip that slash, the API answers 404 on api//v1/... .
+        const universalUrl = "https://app.searcherries.com/api/{{if(substring(parameters.url, 0, 1) == '/', substring(parameters.url, 1, length(parameters.url)), parameters.url)}}";
+        if ((comm.url ?? '') !== universalUrl) error(commFile, `universal module URL must be ${universalUrl} (base host, version in the path, leading slash of the path dropped)`);
         if (comm.method !== 'GET') error(commFile, 'the Searcherries API is read-only; the universal module must send GET');
     }
     if (meta.moduleType !== 'universal' && typeof comm.url === 'string' && !comm.url.startsWith('/')) error(commFile, 'module URL should be relative to baseUrl (start with /)');

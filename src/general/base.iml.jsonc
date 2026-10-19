@@ -26,7 +26,7 @@
             },
             "429": {
                 "type": "RateLimitError",
-                "message": "[429] {{ifempty(body.error.message, 'Too many requests.')}} The per-minute budget of the account is used up (30 requests on Free, 60 on Starter, 120 on Pro). Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
+                "message": "[429] Too many requests. The per-minute budget of the account is used up (30 requests on Free, 60 on Starter, 120 on Pro). Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
             }
         }
     },

@@ -19,7 +19,7 @@
             },
             "429": {
                 "type": "RateLimitError",
-                "message": "[429] {{ifempty(body.error.message, 'Too many requests.')}} Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
+                "message": "[429] Too many requests. Retry after {{ifempty(body.error.retry_after, headers.`retry-after`)}} seconds."
             }
         },
         "metadata": {

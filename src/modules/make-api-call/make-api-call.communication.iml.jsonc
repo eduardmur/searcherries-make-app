@@ -1,7 +1,9 @@
 {
     // The Searcherries REST API is read-only, so only GET is offered. The base
     // headers (accept + bearer token) are inherited; user headers are merged in.
-    "url": "https://app.searcherries.com/api/{{parameters.url}}",
+    // The help suggests `/v1/projects`: drop that leading slash, because the
+    // API answers 404 on `api//v1/...`.
+    "url": "https://app.searcherries.com/api/{{if(substring(parameters.url, 0, 1) == '/', substring(parameters.url, 1, length(parameters.url)), parameters.url)}}",
     "method": "GET",
     "headers": {
         "{{...}}": "{{toCollection(parameters.headers, 'key', 'value')}}"
